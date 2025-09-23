@@ -13,21 +13,21 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
-      cities_id: {
+      city_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
     });
 
     await queryInterface.addConstraint("parishes", {
-      fields: ["cities_id"],
+      fields: ["city_id"],
       type: "foreign key",
       name: "fk_cities_parishes",
       references: {
         table: "cities",
         field: "id",
       },
-      onDelete: "RESTRICT",
+      onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
   },
@@ -39,6 +39,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.bulkDelete("parishes", null, {});
+    await queryInterface.dropTable("parishes", null, {});
   },
 };

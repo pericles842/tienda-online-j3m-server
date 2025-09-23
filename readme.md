@@ -1,6 +1,9 @@
 revertir migracion por nombre de archivo
 ## npx sequelize-cli db:migrate:undo --env development --name 20250506215451-configuracion_web.js
 
+revertir todas las migraciones
+## npx sequelize-cli db:migrate:undo:all
+
 correr migraciones
 ## npx sequelize-cli db:migrate
 

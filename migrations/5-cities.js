@@ -27,7 +27,7 @@ module.exports = {
         table: "states",
         field: "id",
       },
-      onDelete: "RESTRICT",
+      onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
   },
@@ -39,6 +39,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.bulkDelete("cities", null, {});
+    await queryInterface.dropTable("cities", null, {});
   },
 };

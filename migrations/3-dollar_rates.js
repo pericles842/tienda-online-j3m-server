@@ -22,7 +22,7 @@ module.exports = {
         primaryKey: true,
       },
       last_update: {
-        type: Sequelize.VARCHAR(255),
+        type: Sequelize.STRING(255),
         allowNull: false,
       },
       price_old: {
@@ -48,6 +48,6 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
 
-    await queryInterface.bulkDelete("dollar_rates", null, {});
+    await queryInterface.dropTable("dollar_rates", null, {});
   },
 };
