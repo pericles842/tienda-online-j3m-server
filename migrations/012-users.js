@@ -44,7 +44,7 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: true,
       },
-      charge_id: {
+      rol_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -56,7 +56,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      country_id: {
+      city_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -71,11 +71,11 @@ module.exports = {
     });
 
     await queryInterface.addConstraint("users", {
-      fields: ["charge_id"],
+      fields: ["rol_id"],
       type: "foreign key",
-      name: "fk_charges_users",
+      name: "fk_roles_users",
       references: {
-        table: "charges",
+        table: "roles",
         field: "id",
       },
       onDelete: "RESTRICT",
@@ -107,11 +107,11 @@ module.exports = {
     });
 
     await queryInterface.addConstraint("users", {
-      fields: ["country_id"],
+      fields: ["city_id"],
       type: "foreign key",
       name: "fk_countries_users",
       references: {
-        table: "countries",
+        table: "cities",
         field: "id",
       },
       onDelete: "RESTRICT",
