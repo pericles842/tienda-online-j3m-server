@@ -49,8 +49,7 @@ export class Usuario extends Model<
       const [users] = await sequelize.query(query);
       return users as userResponse[];
     } catch (error) {
-      console.error(error);
-      throw new Error("Error al obtener los usuarios");
+      throw error;
     }
   }
 }
