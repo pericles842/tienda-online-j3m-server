@@ -26,10 +26,12 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING(255),
+        unique: true,
         allowNull: false,
       },
       phone: {
         type: Sequelize.STRING(255),
+        unique: true,
         allowNull: false,
       },
       password: {
@@ -38,6 +40,7 @@ module.exports = {
       },
       ci: {
         type: Sequelize.STRING(255),
+        unique: true,
         allowNull: false,
       },
       url_img: {

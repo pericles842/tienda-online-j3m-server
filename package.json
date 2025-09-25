@@ -14,16 +14,21 @@
   "license": "ISC",
   "description": "Plantilla mvc node express sequelize migraciones usando ts ",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "chalk": "^4.1.2",
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.6.0",
     "morgan": "^1.10.0",
     "mysql2": "^3.14.1",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.0.3",
     "sequelize-cli": "^6.6.3",

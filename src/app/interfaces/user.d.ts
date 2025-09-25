@@ -1,12 +1,10 @@
-import { Optional } from "sequelize";
+import { Usuario } from "../models/user.model";
 
-
-interface UsuarioAttributes {
-    id: number;
-    nombre: string;
-    correo: string;
-    telefono: string;
-    password: string | null;
-    creado_en: Date;
+export interface userResponse extends Usuario {
+  savings_box: null | string;
+  state: string;
+  municipality: string;
+  parish: string;
+  role: string;
+  permissions: string;
 }
-
