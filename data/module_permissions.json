@@ -2,481 +2,481 @@
   {
     "role_id": 1,
     "module_id": 1,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 1,
     "module_id": 2,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 1,
     "module_id": 3,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 1,
     "module_id": 4,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 1,
     "module_id": 5,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 1,
     "module_id": 6,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 1,
     "module_id": 7,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 1,
     "module_id": 8,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 1,
     "module_id": 9,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 1,
     "module_id": 10,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 2,
     "module_id": 1,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 2,
     "module_id": 2,
-    "view": true,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": true,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 2,
     "module_id": 3,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 2,
     "module_id": 4,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 2,
     "module_id": 5,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 2,
     "module_id": 6,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 2,
     "module_id": 7,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 2,
     "module_id": 8,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 2,
     "module_id": 9,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 2,
     "module_id": 10,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 3,
     "module_id": 1,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": false
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": false
   },
   {
     "role_id": 3,
     "module_id": 2,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 3,
     "module_id": 3,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 3,
     "module_id": 4,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": false
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": false
   },
   {
     "role_id": 3,
     "module_id": 5,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": false
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": false
   },
   {
     "role_id": 3,
     "module_id": 6,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 3,
     "module_id": 7,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": false
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": false
   },
   {
     "role_id": 3,
     "module_id": 8,
-    "view": true,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": true,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 3,
     "module_id": 9,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 3,
     "module_id": 10,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 4,
     "module_id": 1,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 4,
     "module_id": 2,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 4,
     "module_id": 3,
-    "view": true,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": true,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 4,
     "module_id": 4,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 4,
     "module_id": 5,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 4,
     "module_id": 6,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": true
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
   },
   {
     "role_id": 4,
     "module_id": 7,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 4,
     "module_id": 8,
-    "view": true,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": true,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 4,
     "module_id": 9,
-    "view": true,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": true,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 4,
     "module_id": 10,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 5,
     "module_id": 1,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 5,
     "module_id": 2,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 5,
     "module_id": 3,
-    "view": true,
-    "create": true,
-    "update": true,
-    "delete": false
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": false
   },
   {
     "role_id": 5,
     "module_id": 4,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 5,
     "module_id": 5,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 5,
     "module_id": 6,
-    "view": true,
-    "create": true,
-    "update": false,
-    "delete": false
+    "can_view": true,
+    "can_create": true,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 5,
     "module_id": 7,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 5,
     "module_id": 8,
-    "view": true,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": true,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 5,
     "module_id": 9,
-    "view": true,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": true,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 5,
     "module_id": 10,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 6,
     "module_id": 1,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 6,
     "module_id": 2,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 6,
     "module_id": 3,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 6,
     "module_id": 4,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 6,
     "module_id": 5,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 6,
     "module_id": 6,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 6,
     "module_id": 7,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 6,
     "module_id": 8,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 6,
     "module_id": 9,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   },
   {
     "role_id": 6,
     "module_id": 10,
-    "view": false,
-    "create": false,
-    "update": false,
-    "delete": false
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   }
 ]

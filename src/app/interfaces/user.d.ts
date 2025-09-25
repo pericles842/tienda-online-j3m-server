@@ -1,4 +1,5 @@
 import { Usuario } from "../models/user.model";
+import { ChargesResponse } from "./charges";
 
 export interface userResponse extends Usuario {
   savings_box: null | string;
@@ -6,5 +7,5 @@ export interface userResponse extends Usuario {
   municipality: string;
   parish: string;
   role: string;
-  permissions: string;
+  permissions?: ChargesResponse[];
 }

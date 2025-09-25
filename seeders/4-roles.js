@@ -21,6 +21,10 @@ module.exports = {
     const module_permissionsData = module_permissions.map((m) => ({
       module_id: m.module_id,
       role_id: m.role_id,
+      can_view: m.can_view,
+      can_create: m.can_create,
+      can_update: m.can_update,
+      can_delete: m.can_delete,
       created_at: new Date(),
     }));
 

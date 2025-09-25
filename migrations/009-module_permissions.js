@@ -19,22 +19,22 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      view: {
+      can_view: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
-      create: {
+      can_create: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
-      update: {
+      can_update: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
-      delete: {
+      can_delete: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
