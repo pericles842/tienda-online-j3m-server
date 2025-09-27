@@ -8,11 +8,7 @@ export function addTimestamps(req: Request, res: Response, next: NextFunction) {
   // si la petición es GET, no se agrega la fecha
   if (req.method === "GET") return next();
   // si created_at no viene en la petición, se agrega la fecha actual
-  if (
-    req.body.created_at === undefined ||
-    req.body.created_at === null ||
-    req.body.created_at === ""
-  ) {
+  if (!req.body.hasOwnProperty("created_at") || req.body.created_at === undefined || req.body.created_at === null || req.body.created_at === "") {
     req.body.created_at = ahoraUTC;
   }
 

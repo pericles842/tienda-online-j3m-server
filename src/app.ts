@@ -1,11 +1,12 @@
 // src/app.ts
 import express from "express";
 import { errorHandler } from "./middlewares/errorHandler";
-import { addTimestamps } from "./middlewares/timestamps";
+import cookieParser from "cookie-parser";
 
 import { sequelize } from "./app/config/db";
 import routes from "./routes";
 import path from "path";
+import cors from "cors";
 
 import dotenv from "dotenv";
 import morgan from "morgan";
@@ -17,8 +18,18 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Configuración de CORS para permitir peticiones desde otros orígenes
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 // Middlewares
 app.use(express.json());
+
+//cokie parser Only
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev")); //'dev' o 'combined' para más info
 
@@ -28,7 +39,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // Middlewares
 // Agregar timestamps
-app.use(addTimestamps);
+//app.use(addTimestamps);
 
 // Rutas API
 app.use("/api/", routes);
@@ -36,7 +47,6 @@ app.use("/api/", routes);
 app.get("/", (req, res) => {
   res.render("home", { title: "Home" });
 });
-
 
 //manejo de errores
 app.use(errorHandler);

@@ -27,7 +27,7 @@ export class Usuario extends Model<
   declare parish_id: number;
   declare created_at: CreationOptional<Date>;
 
-  static async getUsers(id: number | null = null) {
+  static async getUsers(id: number | null = null): Promise<userResponse[]> {
     try {
       let query = `SELECT 
       users.*,
@@ -124,7 +124,7 @@ Usuario.init(
     },
     created_at: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
       defaultValue: DataTypes.NOW,
     },
   },

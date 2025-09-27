@@ -1,9 +1,7 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { Usuario } from "../app/models/user.model";
 import { UserPermissions } from "../app/models/role.model";
-import { ChargesResponse } from "../app/interfaces/charges";
-import { permission } from "process";
+import { Usuario } from "../app/models/user.model";
 
 const JWT_SECRET: string = process.env.JWT_SECRET || "";
 
@@ -18,12 +16,12 @@ export async function authMiddleware(
   if (!token) throw "Token requerido";
   try {
     const payload_jwt = (await jwt.verify(token, JWT_SECRET)) as {
-      user: Usuario;
-      permissions: ChargesResponse[];
+      user: Omit<Usuario, "password">;
       iat: number;
       exp: number;
     };
 
+    
     const permissions = await UserPermissions.getUserPermission(
       payload_jwt.user.id
     );

@@ -27,13 +27,15 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   }
 
   if (err instanceof DatabaseError) {
-    res.status(500).json({ message: "Error en la base de datos." });
+    res.status(500).json({
+      message: "Error en la base de datos.",
+      error: err,
+    });
     return;
   }
 
   res.status(500).json({
-    
-    message: 'Error interno del servidor',
-    error: err 
+    message: "Error interno del servidor",
+    error: err,
   });
 };

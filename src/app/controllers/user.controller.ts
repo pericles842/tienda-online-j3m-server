@@ -1,9 +1,8 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Usuario } from "../models/user.model";
-import { UserPermissions } from "../models/role.model";
 
-import { comparePassword, hashPassword } from "../../utils/auth";
 import jwt from "jsonwebtoken";
+import { comparePassword, hashPassword } from "../../utils/auth";
 
 const JWT_SECRET: string = process.env.JWT_SECRET || "";
 const JWT_REFRESH: string = process.env.JWT_REFRESH || "";
@@ -51,50 +50,109 @@ export class UserController {
   ) {
     try {
       const { email, password } = req.body;
-      const user = await Usuario.findOne({ where: { email } });
-
+      let user = await Usuario.findOne({ where: { email } });
       if (!user) throw "Credenciales inválidas";
 
       const match = await comparePassword(password, user.password);
       if (!match) throw "Credenciales inválidas";
 
-      //obtener los permisos
-      const permissions = await UserPermissions.getUserPermission(user.id);
+      let [full_user] = await Usuario.getUsers(user.id);
 
       const userNotPassword: any = {
-        id: user.id,
-        name: user.name,
-        last_name: user.last_name,
-        email: user.email,
-        phone: user.phone,
-        ci: user.ci,
-        url_img: user.url_img,
-        rol_id: user.rol_id,
-        public_group_id: user.public_group_id,
-        state_id: user.state_id,
-        city_id: user.city_id,
-        parish_id: user.parish_id,
-        created_at: user.created_at,
+        id: full_user.id,
+        name: full_user.name,
+        last_name: full_user.last_name,
+        email: full_user.email,
+        phone: full_user.phone,
+        ci: full_user.ci,
+        role: full_user.role,
+        url_img: full_user.url_img,
+        rol_id: full_user.rol_id,
+        public_group_id: full_user.public_group_id,
+        state_id: full_user.state_id,
+        city_id: full_user.city_id,
+        parish_id: full_user.parish_id,
+        created_at: full_user.created_at,
       };
 
-      const accessToken = jwt.sign(
-        { user: userNotPassword, permissions },
-        JWT_SECRET,
-        {
-          expiresIn: "2h",
-        }
-      );
+      const accessToken = jwt.sign({ user: userNotPassword }, JWT_SECRET, {
+        expiresIn: "2h",
+      });
 
       const refreshToken = jwt.sign(
         { userId: userNotPassword.id },
         JWT_REFRESH,
         {
-          expiresIn: "5d",
+          expiresIn: "7d",
         }
       );
 
+      //guardamos en la cokki hhtponly el refres token
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production" ? true : false, // solo https
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+      });
+
+      const { id, name, last_name, role, rol_id } = full_user;
       //jwt.verify(token, JWT_SECRET)
-      res.json({ accessToken, refreshToken });
+      res.json({
+        user: { id, name, last_name, email, role, rol_id },
+        accessToken,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  /**
+   *Controla la auteticacion del usuario genera el token
+   *
+   * @static
+   * @param {Request} req
+   * @param {Response} res
+   * @param {NextFunction} next
+   * @memberof UserController
+   */
+  static async refreshToken(req: Request, res: Response, next: NextFunction) {
+    try {
+      const refreshToken = req.cookies.refreshToken;
+
+      if (!refreshToken) {
+        throw "No hay refresh token";
+      }
+
+      const payload = jwt.verify(refreshToken, JWT_REFRESH) as {
+        userId: number;
+      };
+
+      const [full_user] = await Usuario.getUsers(payload.userId);
+
+      const userNotPassword: any = {
+        id: full_user.id,
+        name: full_user.name,
+        last_name: full_user.last_name,
+        email: full_user.email,
+        phone: full_user.phone,
+        ci: full_user.ci,
+        role: full_user.role,
+        url_img: full_user.url_img,
+        rol_id: full_user.rol_id,
+        public_group_id: full_user.public_group_id,
+        state_id: full_user.state_id,
+        city_id: full_user.city_id,
+        parish_id: full_user.parish_id,
+        created_at: full_user.created_at,
+      };
+      const { id, name, last_name, role, rol_id, email } = full_user;
+      const accessToken = jwt.sign({ user: userNotPassword }, JWT_SECRET, {
+        expiresIn: "2h",
+      });
+      res.json({
+        user: { id, name, last_name, email, role, rol_id },
+        accessToken,
+      });
     } catch (err) {
       next(err);
     }

@@ -10,6 +10,7 @@ const router = Router();
 
 router.post("/users/create", UserController.createUser);
 router.post("/users/authenticate", UserController.authenticateUser);
+router.post("/users/refreshToken", UserController.refreshToken);
 
 //MUNICIPIOS Y CIUDADES
 router.get("/states", StatesController.getStates);

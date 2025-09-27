@@ -84,7 +84,7 @@ export class UserPermissions {
         type: QueryTypes.SELECT,
       }
     );
-    
+
     return permissions.map((p) => {
       p.can_view = !!p.can_view;
       p.can_create = !!p.can_create;
@@ -187,7 +187,8 @@ ModulePermissions.init(
     },
     created_at: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
   },
   {
