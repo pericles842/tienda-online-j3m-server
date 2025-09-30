@@ -16,7 +16,6 @@ import { getLocalIp } from "./utils/systemFunctions";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Configuración de CORS para permitir peticiones desde otros orígenes
 

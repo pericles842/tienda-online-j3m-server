@@ -12,6 +12,7 @@ export class PublicGroupsModel extends Model<
 > {
   declare id: CreationOptional<number>;
   declare name: string;
+  declare description: string;
   declare rif: string;
   declare email: string;
   declare url_img: string;
@@ -32,6 +33,11 @@ PublicGroupsModel.init(
       validate: {
         notEmpty: { msg: "El nombre del grupo es requerido" },
       },
+    },
+    description: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
     },
     rif: {
       type: DataTypes.STRING(255),

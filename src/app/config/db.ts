@@ -12,6 +12,7 @@ export const sequelize = new Sequelize(
     port: Number(process.env.DB_PORT),
     dialect: "mysql",
     dialectModule: require("mysql2"),
+    logging: false,
     pool: {
       max: 5,
       min: 0,

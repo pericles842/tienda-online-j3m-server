@@ -18,3 +18,6 @@ correr datos
 
  correr servidor
 ## npm run dev 
+
+subir cambios
+## railway run

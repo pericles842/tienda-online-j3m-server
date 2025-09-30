@@ -17,6 +17,8 @@ export class Usuario extends Model<
   declare last_name: string;
   declare email: string;
   declare phone: string;
+  declare phone_2: string | null;
+  declare age: string | null;
   declare password: string;
   declare ci: string;
   declare url_img: string | null;
@@ -83,6 +85,16 @@ Usuario.init(
       validate: {
         notEmpty: { msg: "El teléfono no puede estar vacío" },
       },
+    },
+    phone_2: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
+
+    },
+    age: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     password: {
       type: DataTypes.STRING(255),

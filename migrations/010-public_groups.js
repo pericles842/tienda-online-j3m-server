@@ -20,6 +20,10 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
+      description: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+      },
       rif: {
         type: Sequelize.STRING(255),
         allowNull: false,
