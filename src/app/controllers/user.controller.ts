@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { Usuario } from "../models/user.model";
+import { UserPermissions } from "../models/role.model";
 
 import jwt from "jsonwebtoken";
 import { comparePassword, hashPassword } from "../../utils/auth";
@@ -75,8 +76,9 @@ export class UserController {
         created_at: full_user.created_at,
       };
 
+      const permissions = await UserPermissions.getUserPermission(user.id);
       const accessToken = jwt.sign({ user: userNotPassword }, JWT_SECRET, {
-        expiresIn: "2h",
+        expiresIn: "1min",
       });
 
       const refreshToken = jwt.sign(
@@ -90,15 +92,15 @@ export class UserController {
       //guardamos en la cokki hhtponly el refres token
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production" ? true : false, // solo https
-        sameSite: "strict",
+        secure: false,
+        sameSite: 'none',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
       });
 
       const { id, name, last_name, role, rol_id } = full_user;
       //jwt.verify(token, JWT_SECRET)
       res.json({
-        user: { id, name, last_name, email, role, rol_id },
+        user: { id, name, last_name, email, role, rol_id, permissions },
         accessToken,
       });
     } catch (err) {
@@ -118,7 +120,7 @@ export class UserController {
   static async refreshToken(req: Request, res: Response, next: NextFunction) {
     try {
       const refreshToken = req.cookies.refreshToken;
-
+      console.log(req.cookies);
       if (!refreshToken) {
         throw "No hay refresh token";
       }
@@ -128,6 +130,8 @@ export class UserController {
       };
 
       const [full_user] = await Usuario.getUsers(payload.userId);
+
+      let permissions = await UserPermissions.getUserPermission(full_user.id);
 
       const userNotPassword: any = {
         id: full_user.id,
@@ -147,10 +151,10 @@ export class UserController {
       };
       const { id, name, last_name, role, rol_id, email } = full_user;
       const accessToken = jwt.sign({ user: userNotPassword }, JWT_SECRET, {
-        expiresIn: "2h",
+        expiresIn: "1min",
       });
       res.json({
-        user: { id, name, last_name, email, role, rol_id },
+        user: { id, name, last_name, email, role, rol_id, permissions },
         accessToken,
       });
     } catch (err) {
