@@ -50,6 +50,9 @@ export class UserController {
     next: NextFunction
   ) {
     try {
+
+      
+
       const { email, password } = req.body;
       let user = await Usuario.findOne({ where: { email } });
       if (!user) throw "Credenciales inválidas";
@@ -92,8 +95,9 @@ export class UserController {
       //guardamos en la cokki hhtponly el refres token
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: false,
-        sameSite: 'none',
+        secure:true,
+        sameSite: "none",
+        path: "/",
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
       });
 
