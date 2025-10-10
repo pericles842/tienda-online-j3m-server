@@ -21,7 +21,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:4200", // tu frontend (ajusta si está en otro puerto/dominio)
+    origin: [
+      "https://tienda-online-j3m.vercel.app",
+      "http://localhost:4200",
+    ],
     credentials: true, 
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // explícito
     allowedHeaders: ["Content-Type", "Authorization"], // explícito
