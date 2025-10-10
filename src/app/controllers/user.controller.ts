@@ -86,7 +86,7 @@ export class UserController {
       };
 
       const accessToken = jwt.sign({ user: userNotPassword }, JWT_SECRET, {
-        expiresIn: "1min",
+        expiresIn: "1h",
       });
 
       const refreshToken = jwt.sign(
@@ -167,7 +167,7 @@ export class UserController {
       };
       const { id, name, last_name, role, rol_id, email } = full_user;
       const accessToken = jwt.sign({ user: userNotPassword }, JWT_SECRET, {
-        expiresIn: "1min",
+        expiresIn: "1h",
       });
       res.json({
         user: { id, name, last_name, email, role, rol_id },
