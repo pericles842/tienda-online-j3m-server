@@ -4,6 +4,7 @@ import { UserPermissions } from "../models/role.model";
 
 import jwt from "jsonwebtoken";
 import { comparePassword, hashPassword } from "../../utils/auth";
+import { userResponse } from "../interfaces/user";
 
 const JWT_SECRET: string = process.env.JWT_SECRET || "";
 const JWT_REFRESH: string = process.env.JWT_REFRESH || "";
@@ -50,9 +51,6 @@ export class UserController {
     next: NextFunction
   ) {
     try {
-
-      
-
       const { email, password } = req.body;
       let user = await Usuario.findOne({ where: { email } });
       if (!user) throw "Credenciales inválidas";
@@ -61,13 +59,16 @@ export class UserController {
       if (!match) throw "Credenciales inválidas";
 
       let [full_user] = await Usuario.getUsers(user.id);
+      const permissions = await UserPermissions.getUserPermission(user.id);
 
-      const userNotPassword: any = {
+     const userNotPassword:any = {
         id: full_user.id,
         name: full_user.name,
         last_name: full_user.last_name,
         email: full_user.email,
         phone: full_user.phone,
+        phone_2: full_user.phone_2,
+        age: full_user.age,
         ci: full_user.ci,
         role: full_user.role,
         url_img: full_user.url_img,
@@ -77,9 +78,13 @@ export class UserController {
         city_id: full_user.city_id,
         parish_id: full_user.parish_id,
         created_at: full_user.created_at,
+        savings_box: full_user.savings_box,
+        state: full_user.state,
+        municipality: full_user.municipality,
+        parish: full_user.parish,
+        permissions: permissions,
       };
 
-      const permissions = await UserPermissions.getUserPermission(user.id);
       const accessToken = jwt.sign({ user: userNotPassword }, JWT_SECRET, {
         expiresIn: "1min",
       });
@@ -95,7 +100,7 @@ export class UserController {
       //guardamos en la cokki hhtponly el refres token
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure:true,
+        secure: true,
         sameSite: "none",
         path: "/",
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
@@ -104,7 +109,7 @@ export class UserController {
       const { id, name, last_name, role, rol_id } = full_user;
       //jwt.verify(token, JWT_SECRET)
       res.json({
-        user: { id, name, last_name, email, role, rol_id, permissions },
+        user: { id, name, last_name, email, role, rol_id },
         accessToken,
       });
     } catch (err) {
@@ -124,7 +129,7 @@ export class UserController {
   static async refreshToken(req: Request, res: Response, next: NextFunction) {
     try {
       const refreshToken = req.cookies.refreshToken;
-      console.log(req.cookies);
+
       if (!refreshToken) {
         throw "No hay refresh token";
       }
@@ -137,12 +142,14 @@ export class UserController {
 
       let permissions = await UserPermissions.getUserPermission(full_user.id);
 
-      const userNotPassword: any = {
+      const userNotPassword:any = {
         id: full_user.id,
         name: full_user.name,
         last_name: full_user.last_name,
         email: full_user.email,
         phone: full_user.phone,
+        phone_2: full_user.phone_2,
+        age: full_user.age,
         ci: full_user.ci,
         role: full_user.role,
         url_img: full_user.url_img,
@@ -152,13 +159,18 @@ export class UserController {
         city_id: full_user.city_id,
         parish_id: full_user.parish_id,
         created_at: full_user.created_at,
+        savings_box: full_user.savings_box,
+        state: full_user.state,
+        municipality: full_user.municipality,
+        parish: full_user.parish,
+        permissions: permissions,
       };
       const { id, name, last_name, role, rol_id, email } = full_user;
       const accessToken = jwt.sign({ user: userNotPassword }, JWT_SECRET, {
         expiresIn: "1min",
       });
       res.json({
-        user: { id, name, last_name, email, role, rol_id, permissions },
+        user: { id, name, last_name, email, role, rol_id },
         accessToken,
       });
     } catch (err) {
