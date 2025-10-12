@@ -14,6 +14,7 @@ export async function authMiddleware(
   const module_id = req.headers["module_id"];
 
   if (!token) throw "Token requerido";
+  if (!module_id) throw "Modulo requerido";
   try {
     const payload_jwt = (await jwt.verify(token, JWT_SECRET)) as {
       user: Omit<Usuario, "password">;
