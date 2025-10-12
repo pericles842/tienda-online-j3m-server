@@ -27,7 +27,7 @@ app.use(
     ],
     credentials: true, 
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // explícito
-    allowedHeaders: ["Content-Type", "Authorization"], // explícito
+    allowedHeaders: ["Content-Type", "Authorization","module_id"], // explícito
   })
 );
 // Middlewares
