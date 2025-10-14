@@ -22,5 +22,6 @@ router.get("/public_groups", PublicGroupsController.getPublicGroups);
 
 //ROLES Y CARGOS
 router.get("/roles", authMiddleware, RoleController.getRoles);
+router.post("/create-role", authMiddleware, RoleController.createRole);
 
 export default router;

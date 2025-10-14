@@ -36,10 +36,10 @@ export class ModulePermissions extends Model<
   declare id: CreationOptional<number>;
   declare role_id: number;
   declare module_id: number;
-  declare can_view: boolean;
-  declare can_create: boolean;
-  declare can_update: boolean;
-  declare can_delete: boolean;
+  declare can_view: boolean | number;
+  declare can_create: boolean | number;
+  declare can_update: boolean | number;
+  declare can_delete: boolean | number;
   declare created_at: CreationOptional<Date>;
 }
 
@@ -112,7 +112,8 @@ Role.init(
     },
     created_at: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
   },
   {

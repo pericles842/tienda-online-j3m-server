@@ -15,3 +15,16 @@ export interface ChargesResponse {
   can_update: number | boolean;
   can_delete: number | boolean;
 }
+
+/**
+ *request del cliente al momento de crear un cargo
+ *
+ * @export
+ * @interface ChargesCreate
+ */
+export interface ChargesCreate {
+  id?: number;
+  name: string;
+  description: string;
+  permissions: Omit<ChargesResponse, "id_user" | "role_id" | "rol">[];
+}
