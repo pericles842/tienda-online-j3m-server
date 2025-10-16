@@ -1,5 +1,6 @@
 // src/middlewares/errorHandler.ts
 import { ErrorRequestHandler } from "express";
+import { TokenExpiredError } from "jsonwebtoken";
 import {
   UniqueConstraintError,
   ValidationError,
@@ -30,6 +31,14 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     res.status(500).json({
       message: "Error en la base de datos.",
       error: err,
+    });
+    return;
+  }
+
+  if (err instanceof TokenExpiredError) {
+    res.status(500).json({
+      message: "Error interno del servidor",
+      error: err.message,
     });
     return;
   }

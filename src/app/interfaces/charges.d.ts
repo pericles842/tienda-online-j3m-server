@@ -5,6 +5,7 @@
  * @interface ChargesResponse
  */
 export interface ChargesResponse {
+  id?: number;
   id_user: number;
   role_id: number;
   rol: string;

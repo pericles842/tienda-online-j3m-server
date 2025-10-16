@@ -7,7 +7,7 @@ import {
   QueryTypes,
 } from "sequelize";
 import { sequelize } from "../config/db";
-import { ChargesResponse } from "../interfaces/charges";
+import { ChargesCreate, ChargesResponse } from "../interfaces/charges";
 
 export class Role extends Model<
   InferAttributes<Role>,
@@ -17,6 +17,7 @@ export class Role extends Model<
   declare name: string;
   declare description: string;
   declare created_at: CreationOptional<Date>;
+  permissions?: any;
 }
 
 export class Module extends Model<
@@ -50,10 +51,6 @@ export class ModulePermissions extends Model<
  * @class ChargesUsers
  */
 export class UserPermissions {
-  public role: Role = new Role();
-  public module: Module = new Module();
-  public modulePermissions: ModulePermissions = new ModulePermissions();
-
   /**
    *Obtiene los permisos de un usuario
    *
@@ -92,6 +89,26 @@ export class UserPermissions {
       p.can_delete = !!p.can_delete;
       return p;
     });
+  }
+
+  /**
+   * Lista los cargos y los permisos de los modulos
+   *
+   * @static
+   * @return {*}
+   * @memberof UserPermissions
+   */
+  static async getPermission() {
+    let roles = await Role.findAll(); // o simplemente sin raw
+    let permissions = await ModulePermissions.findAll();
+
+    let result = roles.map((r) => {
+      const role = r.get({ plain: true }); // convierte en objeto normal
+      role.permissions = permissions.filter((p) => p.role_id === r.id);
+      return role;
+    });
+
+    return result as ChargesCreate[];
   }
 }
 

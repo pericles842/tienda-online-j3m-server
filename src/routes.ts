@@ -23,5 +23,8 @@ router.get("/public_groups", PublicGroupsController.getPublicGroups);
 //ROLES Y CARGOS
 router.get("/roles", authMiddleware, RoleController.getRoles);
 router.post("/create-role", authMiddleware, RoleController.createRole);
+router.get("/role-permissions", authMiddleware, RoleController.getRolePermissions);
+router.delete("/role-permissions/:id", authMiddleware, RoleController.deleteRolePermissions);
+router.delete("/role-group-permissions", authMiddleware, RoleController.deleteGroupRolePermissions);
 
 export default router;
