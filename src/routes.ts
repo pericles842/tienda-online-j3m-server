@@ -8,9 +8,14 @@ import { PublicGroupsController } from "./app/controllers/public_groups.controll
 
 const router = Router();
 
+//Autenticacion
 router.post("/users/create", UserController.createUser);
 router.post("/users/authenticate", UserController.authenticateUser);
 router.post("/users/refreshToken", UserController.refreshToken);
+
+//Usuarios
+router.get("/users", authMiddleware, UserController.getUsers);
+
 
 //MUNICIPIOS Y CIUDADES
 router.get("/states", StatesController.getStates);

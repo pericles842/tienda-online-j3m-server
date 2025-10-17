@@ -61,7 +61,7 @@ export class UserController {
       let [full_user] = await Usuario.getUsers(user.id);
       const permissions = await UserPermissions.getUserPermission(user.id);
 
-     const userNotPassword:any = {
+      const userNotPassword: any = {
         id: full_user.id,
         name: full_user.name,
         last_name: full_user.last_name,
@@ -142,7 +142,7 @@ export class UserController {
 
       let permissions = await UserPermissions.getUserPermission(full_user.id);
 
-      const userNotPassword:any = {
+      const userNotPassword: any = {
         id: full_user.id,
         name: full_user.name,
         last_name: full_user.last_name,
@@ -173,6 +173,15 @@ export class UserController {
         user: { id, name, last_name, email, role, rol_id },
         accessToken,
       });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getUsers(req: Request, res: Response, next: NextFunction) {
+    try {
+      const usuarios = await Usuario.getUsers();
+      res.json(usuarios);
     } catch (err) {
       next(err);
     }
