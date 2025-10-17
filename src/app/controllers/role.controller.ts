@@ -41,7 +41,7 @@ export class RoleController {
 
         const permissionsDataUpdate = body.permissions.map((permission) => ({
           id: permission.id,
-          role_id: role.id,
+          role_id: id  as number,
           module_id: permission.module_id,
           can_view: permission.can_view,
           can_create: permission.can_create,
