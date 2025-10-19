@@ -1,13 +1,13 @@
-import { NextFunction, Request, Response } from "express";
-import { Usuario } from "../models/user.model";
-import { UserPermissions } from "../models/role.model";
+import { NextFunction, Request, Response } from 'express';
+import { UserPermissions } from '../models/role.model';
+import { Usuario } from '../models/user.model';
 
-import jwt from "jsonwebtoken";
-import { comparePassword, hashPassword } from "../../utils/auth";
-import { userResponse } from "../interfaces/user";
+import jwt from 'jsonwebtoken';
+import { comparePassword, decodeToken, hashPassword } from '../../utils/auth';
+import { Op } from 'sequelize';
 
-const JWT_SECRET: string = process.env.JWT_SECRET || "";
-const JWT_REFRESH: string = process.env.JWT_REFRESH || "";
+const JWT_SECRET: string = process.env.JWT_SECRET || '';
+const JWT_REFRESH: string = process.env.JWT_REFRESH || '';
 
 export class UserController {
   /**
@@ -35,6 +35,36 @@ export class UserController {
       next(err);
     }
   }
+  static async editUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      let userRequest = req.body;
+      const user = await Usuario.findByPk(userRequest.id);
+
+      const isSamePassword = await comparePassword(userRequest.password, user!.password);
+
+      // si la contraseña no es la misma la encriptamos
+      if (!isSamePassword) {
+        userRequest.password = await hashPassword(userRequest.password);
+      }
+
+      await Usuario.update(userRequest, { where: { id: userRequest.id } });
+
+      const [userResponse] = await Usuario.getUsers(userRequest.id);
+
+      // Encriptar la contraseña
+      // const passwordHash = await hashPassword(req.body.password);
+
+      // Agregar la contraseña encriptada
+      // req.body.password = passwordHash;
+
+      // const { id } = await Usuario.create(req.body);
+      // const [user] = await Usuario.getUsers(id);
+
+      res.json(userResponse);
+    } catch (err) {
+      next(err);
+    }
+  }
 
   /**
    *Controla la auteticacion del usuario genera el token y refresh tokeb
@@ -45,15 +75,11 @@ export class UserController {
    * @param {NextFunction} next
    * @memberof UserController
    */
-  static async authenticateUser(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
+  static async authenticateUser(req: Request, res: Response, next: NextFunction) {
     try {
       const { email, password } = req.body;
       let user = await Usuario.findOne({ where: { email } });
-      if (!user) throw "Credenciales inválidas";
+      if (!user) throw 'Credenciales inválidas';
 
       const match = await comparePassword(password, user.password);
       if (!match) throw "Credenciales inválidas";
@@ -82,35 +108,31 @@ export class UserController {
         state: full_user.state,
         municipality: full_user.municipality,
         parish: full_user.parish,
-        permissions: permissions,
+        permissions: permissions
       };
 
       const accessToken = jwt.sign({ user: userNotPassword }, JWT_SECRET, {
-        expiresIn: "1h",
+        expiresIn: '1h'
       });
 
-      const refreshToken = jwt.sign(
-        { userId: userNotPassword.id },
-        JWT_REFRESH,
-        {
-          expiresIn: "7d",
-        }
-      );
+      const refreshToken = jwt.sign({ userId: userNotPassword.id }, JWT_REFRESH, {
+        expiresIn: '7d'
+      });
 
       //guardamos en la cokki hhtponly el refres token
-      res.cookie("refreshToken", refreshToken, {
+      res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
         secure: true,
-        sameSite: "none",
-        path: "/",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
+        sameSite: 'none',
+        path: '/',
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 días
       });
 
       const { id, name, last_name, role, rol_id } = full_user;
       //jwt.verify(token, JWT_SECRET)
       res.json({
         user: { id, name, last_name, email, role, rol_id },
-        accessToken,
+        accessToken
       });
     } catch (err) {
       next(err);
@@ -131,7 +153,7 @@ export class UserController {
       const refreshToken = req.cookies.refreshToken;
 
       if (!refreshToken) {
-        throw "No hay refresh token";
+        throw 'No hay refresh token';
       }
 
       const payload = jwt.verify(refreshToken, JWT_REFRESH) as {
@@ -163,25 +185,79 @@ export class UserController {
         state: full_user.state,
         municipality: full_user.municipality,
         parish: full_user.parish,
-        permissions: permissions,
+        permissions: permissions
       };
       const { id, name, last_name, role, rol_id, email } = full_user;
       const accessToken = jwt.sign({ user: userNotPassword }, JWT_SECRET, {
-        expiresIn: "1h",
+        expiresIn: '1h'
       });
       res.json({
         user: { id, name, last_name, email, role, rol_id },
-        accessToken,
+        accessToken
       });
     } catch (err) {
       next(err);
     }
   }
 
+  /**
+   *Lista los usuarios del sismta , no lista el usuario que esta ejecutando la petición
+   *
+   * @static
+   * @param {Request} req
+   * @param {Response} res
+   * @param {NextFunction} next
+   * @memberof UserController
+   */
   static async getUsers(req: Request, res: Response, next: NextFunction) {
     try {
-      const usuarios = await Usuario.getUsers();
+      const payload = decodeToken(req.headers.authorization as string);
+      let usuarios = await Usuario.getUsers(null, payload.user.id);
+
       res.json(usuarios);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  /**
+   *Elimina un registro
+   *
+   * @static
+   * @param {Request} req
+   * @param {Response} res
+   * @param {NextFunction} next
+   * @memberof UserController
+   */
+  static async deleteUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const id_response = await Usuario.destroy({ where: { id } });
+      res.json(id_response);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  /**
+   *Elimina grupos de usuarios
+   *
+   * @static
+   * @param {Request} req
+   * @param {Response} res
+   * @param {NextFunction} next
+   * @memberof UserController
+   */
+  static async deleteGroupUsers(req: Request, res: Response, next: NextFunction) {
+    try {
+      let ids = req.query.id;
+      const ids_array = Array.isArray(ids) ? ids.map(Number) : [Number(ids)];
+
+      await Usuario.destroy({
+        where: { id: { [Op.in]: ids_array } }
+      });
+
+      res.json({ ids_array });
     } catch (err) {
       next(err);
     }

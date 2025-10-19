@@ -29,7 +29,10 @@ export class Usuario extends Model<
   declare parish_id: number;
   declare created_at: CreationOptional<Date>;
 
-  static async getUsers(id: number | null = null): Promise<userResponse[]> {
+  static async getUsers(
+    id: number | null = null,
+    notUserId: number | null = null
+  ): Promise<userResponse[]> {
     try {
       let query = `SELECT 
       users.*,
@@ -46,6 +49,10 @@ export class Usuario extends Model<
       INNER JOIN roles ON roles.id = users.rol_id `;
       if (id) {
         query += ` WHERE users.id = ${id};`;
+      }
+
+      if(notUserId){
+        query+= ` WHERE users.id != ${notUserId} and users.id != 1;`;
       }
 
       const [users] = await sequelize.query(query);
@@ -90,7 +97,6 @@ Usuario.init(
       type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: null,
-
     },
     age: {
       type: DataTypes.INTEGER,

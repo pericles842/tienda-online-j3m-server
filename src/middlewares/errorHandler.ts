@@ -30,17 +30,18 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   if (err instanceof DatabaseError) {
     res.status(500).json({
       message: "Error en la base de datos.",
-      error: err,
+      error: err.name,
+      sqlError:err
     });
     return;
   }
 
   if (err instanceof TokenExpiredError) {
-    res.status(500).json({
+    res.status(401).json({
       message: "Error interno del servidor",
       error: err.message,
     });
-    return;
+
   }
 
   res.status(500).json({

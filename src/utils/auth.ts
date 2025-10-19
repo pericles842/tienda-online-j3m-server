@@ -1,5 +1,7 @@
 // helpers/auth.ts
 import * as bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { userResponse } from "../app/interfaces/user";
 
 /**
  * Encripta la contraseña del usuario
@@ -23,4 +25,19 @@ export async function hashPassword(plain: string) {
  */
 export async function comparePassword(plain: string, hash: string) {
   return await bcrypt.compare(plain, hash);
+}
+
+/**
+ * Decodifica el token
+ *
+ * @export
+ * @param {string} token
+ * @return {Promise<object>}
+ */
+export function decodeToken(token: string) {
+  return jwt.decode(token) as unknown as {
+    exp: string;
+    iat: string;
+    user: userResponse;
+  };
 }

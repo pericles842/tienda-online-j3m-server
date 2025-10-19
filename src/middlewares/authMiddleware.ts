@@ -22,7 +22,6 @@ export async function authMiddleware(
       exp: number;
     };
 
-    
     const permissions = await UserPermissions.getUserPermission(
       payload_jwt.user.id
     );
@@ -33,13 +32,13 @@ export async function authMiddleware(
 
     //errores de acceso
     if (req.method === "GET" && !module_access.can_view)
-      throw "Acceso Denegado, no puedes ver este recurso";
+      throw `Acceso denegado en el modulo de ${module_access.module}, no puedes ver este recurso`;
     if (req.method === "POST" && !module_access.can_create)
-      throw "Acceso Denegado, no puedes crear este recurso";
+      throw `Acceso denegado en el modulo de ${module_access.module},, no puedes crear este recurso`;
     if (req.method === "PUT" && !module_access.can_update)
-      throw "Acceso Denegado, no puedes actualizar este recurso";
+      throw `Acceso denegado en el modulo de ${module_access.module},, no puedes actualizar este recurso`;
     if (req.method === "DELETE" && !module_access.can_delete)
-      throw "Acceso Denegado, no puedes eliminar este recurso";
+      throw `Acceso denegado en el modulo de ${module_access.module},, no puedes eliminar este recurso`;
 
     next();
   } catch (err) {
