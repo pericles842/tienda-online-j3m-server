@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title><%= title %></title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        background-color: #f9fafb;
+        padding: 20px;
+        color: #333;
+      }
+
+      h1 {
+        color: #111827;
+        border-bottom: 3px solid #a3e635;
+        padding-bottom: 8px;
+        margin-bottom: 24px;
+        font-size: 1.8rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      thead {
+        background-color: #a3e635;
+        color: #1a1a1a;
+      }
+
+      th {
+        padding: 9px 10px;
+        text-align: left;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      td {
+        color: #111827;
+        padding: 8px;
+        border-top: 1px solid #f0f0f0;
+        transition: background-color 0.2s ease;
+        font-size: 14px;
+      }
+
+      tr:nth-child(even) td {
+        background-color: #f9fafb;
+      }
+
+      tr:hover td {
+        background-color: #f1fdf0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Reporte de <%= title %></h1>
+
+    <p>Generado el: <%= new Date().toLocaleDateString() %></p>
+
+    <table>
+      <thead>
+        <tr>
+          <% columns.forEach((item, i) => { %>
+
+          <td><%= item.label %></td>
+
+          <% }) %>
+        </tr>
+      </thead>
+      <tbody>
+  <% // 🔁 Recorremos cada fila de datos %>
+  <% data.forEach((item) => { %>
+    <tr>
+      <% // Recorremos cada columna definida dinámicamente %>
+      <% columns.forEach((col) => { %>
+        <% 
+          // Obtenemos el valor del campo según la clave de la columna
+          const value = item[col.key];
+          // Determinamos el tipo de dato (date, boolean o default)
+          const type = col.dataType || 'default';
+        %>
+
+        <% //  Si el tipo es fecha, la formateamos en formato español %>
+        <% if (type === 'date') { %>
+          <td><%= value ? new Date(value).toLocaleDateString('es-ES') : '' %></td>
+
+        <% // Si el tipo es booleano, mostramos Sí / No %>
+        <% } else if (type === 'boolean') { %>
+          <td><%= value ? 'Sí' : 'No' %></td>
+
+        <% // En cualquier otro caso, mostramos el valor directamente %>
+        <% } else { %>
+          <td><%= value !== undefined ? value : '' %></td>
+        <% } %>
+
+      <% }) %>
+    </tr>
+  <% }) %>
+</tbody>
+
+    </table>
+  </body>
+</html>

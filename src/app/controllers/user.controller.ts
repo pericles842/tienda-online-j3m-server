@@ -3,9 +3,8 @@ import { UserPermissions } from '../models/role.model';
 import { Usuario } from '../models/user.model';
 
 import jwt from 'jsonwebtoken';
-import { comparePassword, decodeToken, hashPassword } from '../../utils/auth';
 import { Op } from 'sequelize';
-import { log } from 'console';
+import { comparePassword, decodeToken, hashPassword } from '../../utils/auth';
 
 const JWT_SECRET: string = process.env.JWT_SECRET || '';
 const JWT_REFRESH: string = process.env.JWT_REFRESH || '';
