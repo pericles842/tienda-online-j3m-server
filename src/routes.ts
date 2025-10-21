@@ -15,8 +15,10 @@ router.post('/users/refreshToken', UserController.refreshToken);
 
 //*Usuarios
 router.get('/users', authMiddleware, UserController.getUsers);
+router.get('/users/:id', UserController.getUser);
 router.post('/users/create', authMiddleware, UserController.createUser);
 router.put('/users/edit', authMiddleware, UserController.editUser);
+router.put('/users/edit-profile',  UserController.editUser);
 router.delete('/users/delete/:id', authMiddleware, UserController.deleteUser);
 router.delete('/users/delete-group', authMiddleware, UserController.deleteGroupUsers);
 
@@ -29,7 +31,7 @@ router.get('/parishes/:id_city', StatesController.getParishes);
 router.get('/public_groups', PublicGroupsController.getPublicGroups);
 
 //*ROLES Y CARGOS
-router.get('/roles', authMiddleware, RoleController.getRoles);
+router.get('/roles',  RoleController.getRoles);
 router.post('/create-role', authMiddleware, RoleController.createRole);
 router.get('/role-permissions', authMiddleware, RoleController.getRolePermissions);
 router.delete('/role-permissions/:id', authMiddleware, RoleController.deleteRolePermissions);

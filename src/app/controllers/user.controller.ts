@@ -5,6 +5,7 @@ import { Usuario } from '../models/user.model';
 import jwt from 'jsonwebtoken';
 import { comparePassword, decodeToken, hashPassword } from '../../utils/auth';
 import { Op } from 'sequelize';
+import { log } from 'console';
 
 const JWT_SECRET: string = process.env.JWT_SECRET || '';
 const JWT_REFRESH: string = process.env.JWT_REFRESH || '';
@@ -38,12 +39,12 @@ export class UserController {
   static async editUser(req: Request, res: Response, next: NextFunction) {
     try {
       let userRequest = req.body;
-      const user = await Usuario.findByPk(userRequest.id);
+      const user = await Usuario.findOne({ where: { id: userRequest.id } });
 
-      const isSamePassword = await comparePassword(userRequest.password, user!.password);
+      //const isSamePassword = await comparePassword(userRequest.password, user!.password);
 
-      // si la contraseña no es la misma la encriptamos
-      if (!isSamePassword) {
+      // si la contraseña no es la misma la encriptamos esta comparando el hash puro
+      if (userRequest.password !== user!.password) {
         userRequest.password = await hashPassword(userRequest.password);
       }
 
@@ -82,7 +83,7 @@ export class UserController {
       if (!user) throw 'Credenciales inválidas';
 
       const match = await comparePassword(password, user.password);
-      if (!match) throw "Credenciales inválidas";
+      if (!match) throw 'Credenciales inválidas';
 
       let [full_user] = await Usuario.getUsers(user.id);
       const permissions = await UserPermissions.getUserPermission(user.id);
@@ -258,6 +259,26 @@ export class UserController {
       });
 
       res.json({ ids_array });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  /**
+   *Obtiene un usuario
+   *
+   * @static
+   * @param {Request} req
+   * @param {Response} res
+   * @param {NextFunction} next
+   * @memberof UserController
+   */
+  static async getUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const [usuarios] = await Usuario.getUsers(Number(id));
+
+      res.json(usuarios);
     } catch (err) {
       next(err);
     }
