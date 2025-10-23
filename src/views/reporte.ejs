@@ -66,6 +66,7 @@
     <table>
       <thead>
         <tr>
+          <td>#</td>
           <% columns.forEach((item, i) => { %>
 
           <td><%= item.label %></td>
@@ -75,8 +76,9 @@
       </thead>
       <tbody>
   <% // 🔁 Recorremos cada fila de datos %>
-  <% data.forEach((item) => { %>
+  <% data.forEach((item, index) => { %>
     <tr>
+       <td><%= index + 1 %></td>
       <% // Recorremos cada columna definida dinámicamente %>
       <% columns.forEach((col) => { %>
         <% 

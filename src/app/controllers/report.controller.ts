@@ -2,7 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import { Usuario } from '../models/user.model';
 import { generatePDF, setHeadersForPdf } from '../../utils/pdfGenerator';
 import { ColumnsReport } from '../interfaces/report';
-import { UserPermissions } from '../models/role.model';
+import { Module, UserPermissions } from '../models/role.model';
+import { PublicGroupsModel } from '../models/public_groups.model';
 
 export class ReportController {
   /**
@@ -44,18 +45,45 @@ export class ReportController {
   static async ChargeReport(req: Request, res: Response, next: NextFunction) {
     try {
       let roles = await UserPermissions.getPermission();
+      let modules = await Module.findAll();
       const title = 'Listado de cargos';
 
       const columns: ColumnsReport[] = [
         { dataType: 'string', width: 10, key: 'name', label: 'Nombre' },
-        { dataType: 'string', width: 10, key: 'description', label: 'Description' },
+        { dataType: 'array', width: 10, key: 'permissions', label: 'Description' },
+        { dataType: 'date', width: 10, key: 'created_at', label: 'Fecha de Registro' }
+      ];
+
+      const pdfBuffer = await generatePDF('charges_permission_report', {
+        title: title,
+        columns: columns,
+        data: roles,
+        modulesMap: modules
+      });
+
+      setHeadersForPdf(title, res);
+
+      res.send(pdfBuffer);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async groupsReport(req: Request, res: Response, next: NextFunction) {
+    try {
+      let groups = await PublicGroupsModel.findAll();
+      const title = 'Listado de Cajas de ahorro';
+      const columns: ColumnsReport[] = [
+        { dataType: 'string', width: 10, key: 'name', label: 'Nombre' },
+        { dataType: 'string', width: 10, key: 'rif', label: 'Rif' },
+        { dataType: 'string', width: 10, key: 'email', label: 'Correo' },
         { dataType: 'date', width: 10, key: 'created_at', label: 'Fecha de Registro' }
       ];
 
       const pdfBuffer = await generatePDF('reporte', {
         title: title,
         columns: columns,
-        data: roles
+        data: groups
       });
 
       setHeadersForPdf(title, res);

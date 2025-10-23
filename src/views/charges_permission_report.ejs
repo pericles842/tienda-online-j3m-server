@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title><%= title %></title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        background-color: #f9fafb;
+        padding: 20px;
+        color: #333;
+      }
+
+      h1 {
+        color: #111827;
+        border-bottom: 3px solid #a3e635;
+        padding-bottom: 8px;
+        margin-bottom: 24px;
+        font-size: 1.8rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      thead {
+        background-color: #a3e635;
+        color: #1a1a1a;
+      }
+
+      th {
+        padding: 9px 10px;
+        text-align: left;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      td {
+        color: #111827;
+        padding: 8px;
+        border-top: 1px solid #f0f0f0;
+        transition: background-color 0.2s ease;
+        font-size: 14px;
+      }
+
+      tr:nth-child(even) td {
+        background-color: #f9fafb;
+      }
+
+      tr:hover td {
+        background-color: #f1fdf0;
+      }
+      tr:not(.subheader):nth-child(even) td {
+  background-color: #f9fafb;
+}
+
+tr:not(.subheader):hover td {
+  background-color: #f1fdf0;
+}
+
+.subheader td {
+  background-color: #a3e635 !important;
+  font-weight: 600;
+}
+    </style>
+  </head>
+  <body>
+    <h1>Reporte de <%= title %></h1>
+
+    <p>Generado el: <%= new Date().toLocaleDateString() %></p>
+
+    <% data.forEach((role, index) => { %>
+  <div [style]="<%= index > 0 ? 'page-break-before: always;' : '' %>' page-break-inside: avoid;'">
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 40px;">
+      <thead>
+        <tr >
+          <th colspan="8" style="text-align: left; background-color: #e2e8f0; ">
+            <span style=" font-size: 16px; ">
+                Cargo: <%= role.name %></span>
+                <br>
+            <span style=" font-size: 8px; "> <%= role.description %></span>
+          </th>
+             
+        </tr>
+        <tr class="subheader">
+          <td>#</td>
+          <td>Módulo</td>
+          <td>Ver</td>
+          <td>Crear</td>
+          <td>Editar</td>
+          <td>Eliminar</td>
+          <td>Fecha de Registro</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% role.permissions.forEach((perm,index) => { %>
+          <% const module = modulesMap.find(m => m.id === perm.module_id); %>
+          <tr>
+            <td><%= index+1 %></td>
+            <td><%= module ? module.name : 'Módulo ' + perm.module_id %></td>
+            <td style="text-align:center;"><%= perm.can_view ? '✓' : '✗' %></td>
+            <td style="text-align:center;"><%= perm.can_create ? '✓' : '✗' %></td>
+            <td style="text-align:center;"><%= perm.can_update ? '✓' : '✗' %></td>
+            <td style="text-align:center;"><%= perm.can_delete ? '✓' : '✗' %></td>
+            <td><%= new Date(perm.created_at).toLocaleDateString('es-ES') %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% }) %>
+
+  </body>
+</html>

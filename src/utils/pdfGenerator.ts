@@ -17,6 +17,7 @@ export const generatePDF = async (templateName: string, data: DataReport) => {
 
   const options = {
     format: 'A4',
+    margin: { top: '20mm', bottom: '20mm' },
     printBackground: true
   };
 

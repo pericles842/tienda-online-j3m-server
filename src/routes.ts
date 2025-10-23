@@ -41,5 +41,6 @@ router.delete('/role-group-permissions', authMiddleware, RoleController.deleteGr
 //*Reportes de usuarios
 router.get('/users-report', authMiddleware, ReportController.userReport);
 router.get('/charge-report', authMiddleware, ReportController.ChargeReport);
+router.get('/groups-report', authMiddleware, ReportController.groupsReport);
 
 export default router;
