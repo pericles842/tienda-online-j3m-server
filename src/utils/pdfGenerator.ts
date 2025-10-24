@@ -1,30 +1,45 @@
-import ejs from 'ejs';
-import path from 'path';
-// @ts-ignore
-import pdf from 'html-pdf-node';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
+(<any>pdfMake).addVirtualFileSystem(pdfFonts);
+
+
+
 import moment from 'moment';
 import { DataReport } from '../app/interfaces/report';
 
-/**
- * GENERA UN PDF
- * @param templateName
- * @param data
- * @returns
- */
-export const generatePDF = async (templateName: string, data: DataReport) => {
-  const filePath = path.join(__dirname, '..', 'views', `${templateName}.ejs`);
-  const html = await ejs.renderFile(filePath, data);
+(<any>pdfMake).addVirtualFileSystem(pdfFonts);
 
-  const options = {
-    format: 'A4',
-    margin: { top: '20mm', bottom: '20mm' },
-    printBackground: true
+export const generatePDF = async (templateName: string, data: DataReport) => {
+  // Definimos el contenido del PDF
+  const docDefinition = {
+    content: [
+      { text: data.title, style: 'header' },
+      {
+        table: {
+          widths: ['*', '*', '*'],
+          body: [
+            ['Nombre', 'Edad', 'Ciudad'],
+            ['Luis', '21', 'Madrid'],
+            ['Ana', '30', 'Barcelona'],
+            ['Pedro', '25', 'Sevilla']
+          ]
+        },
+        layout: 'lightHorizontalLines'
+      }
+    ],
+    styles: {
+      header: { fontSize: 22, bold: true, marginBottom: 10 }
+    },
+    defaultStyle: { fontSize: 12 }
   };
 
-  const file = { content: html };
-  const pdfBuffer = await pdf.generatePdf(file, options);
-
-  return pdfBuffer;
+  // Generamos el PDF como Buffer
+  return new Promise<Buffer>((resolve) => {
+    pdfMake.createPdf(docDefinition).getBuffer((buffer: Buffer) => {
+      resolve(buffer);
+    });
+  });
 };
 
 /**

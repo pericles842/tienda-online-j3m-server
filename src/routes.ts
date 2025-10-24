@@ -39,7 +39,7 @@ router.delete('/role-permissions/:id', authMiddleware, RoleController.deleteRole
 router.delete('/role-group-permissions', authMiddleware, RoleController.deleteGroupRolePermissions);
 
 //*Reportes de usuarios
-router.get('/users-report', authMiddleware, ReportController.userReport);
+router.get('/users-report',  ReportController.userReport);
 router.get('/charge-report', authMiddleware, ReportController.ChargeReport);
 router.get('/groups-report', authMiddleware, ReportController.groupsReport);
 
