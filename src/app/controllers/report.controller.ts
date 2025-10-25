@@ -20,15 +20,15 @@ export class ReportController {
       let usuarios = await Usuario.getUsers();
       const title = 'Listado de usuarios';
       const columns: ColumnsReport[] = [
-        { dataType: 'string', width: 10, key: 'name', label: 'Nombre' },
-        { dataType: 'string', width: 10, key: 'email', label: 'Correo' },
-        { dataType: 'string', width: 10, key: 'role', label: 'Cargo' },
-        { dataType: 'string', width: 10, key: 'phone', label: 'Teléfono' },
-        { dataType: 'string', width: 10, key: 'ci', label: 'Cédula' },
-        { dataType: 'date', width: 10, key: 'created_at', label: 'Fecha de Registro' }
+        { dataType: 'string', width: '*', key: 'name', label: 'Nombre' },
+        { dataType: 'string', width: '*', key: 'email', label: 'Correo' },
+        { dataType: 'string', width: '*', key: 'role', label: 'Cargo' },
+        { dataType: 'string', width: 'auto', key: 'phone', label: 'Teléfono' },
+        { dataType: 'string', width: 'auto', key: 'ci', label: 'Cédula' },
+        { dataType: 'date', width: 'auto', key: 'created_at', label: 'Fecha' }
       ];
 
-      const pdfBuffer = await generatePDF('reporte', {
+      const pdfBuffer = await generatePDF(title, {
         title: title,
         columns: columns,
         data: usuarios
@@ -49,8 +49,8 @@ export class ReportController {
       const title = 'Listado de cargos';
 
       const columns: ColumnsReport[] = [
-        { dataType: 'string', width: 10, key: 'name', label: 'Nombre' },
-        { dataType: 'array', width: 10, key: 'permissions', label: 'Description' },
+        { dataType: 'string', width: '*', key: 'name', label: 'Nombre' },
+        { dataType: 'string', width: '*', key: 'permissions', label: 'Description' },
         { dataType: 'date', width: 10, key: 'created_at', label: 'Fecha de Registro' }
       ];
 
@@ -74,10 +74,10 @@ export class ReportController {
       let groups = await PublicGroupsModel.findAll();
       const title = 'Listado de Cajas de ahorro';
       const columns: ColumnsReport[] = [
-        { dataType: 'string', width: 10, key: 'name', label: 'Nombre' },
-        { dataType: 'string', width: 10, key: 'rif', label: 'Rif' },
-        { dataType: 'string', width: 10, key: 'email', label: 'Correo' },
-        { dataType: 'date', width: 10, key: 'created_at', label: 'Fecha de Registro' }
+        { dataType: 'string', width: '*', key: 'name', label: 'Nombre' },
+        { dataType: 'string', width: 'auto', key: 'rif', label: 'Rif' },
+        { dataType: 'string', width: '*', key: 'email', label: 'Correo' },
+        { dataType: 'date', width: 'auto', key: 'created_at', label: 'Fecha ' }
       ];
 
       const pdfBuffer = await generatePDF('reporte', {
