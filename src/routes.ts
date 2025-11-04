@@ -6,6 +6,7 @@ import { RoleController } from './app/controllers/role.controller';
 import { StatesController } from './app/controllers/state.controller';
 import { PublicGroupsController } from './app/controllers/public_groups.controller';
 import { ReportController } from './app/controllers/report.controller';
+import { CategoryController } from './app/controllers/category.controller';
 
 const router = Router();
 
@@ -38,8 +39,13 @@ router.get('/role-permissions', authMiddleware, RoleController.getRolePermission
 router.delete('/role-permissions/:id', authMiddleware, RoleController.deleteRolePermissions);
 router.delete('/role-group-permissions', authMiddleware, RoleController.deleteGroupRolePermissions);
 
+//*CATEGORIAS
+router.get('/categories-tree', CategoryController.getCategoriesTree);
+router.get('/categories', authMiddleware, CategoryController.getCategories);
+router.post('/create-category', authMiddleware, CategoryController.createCategory);
+
 //*Reportes de usuarios
-router.get('/users-report',  ReportController.userReport);
+router.get('/users-report', ReportController.userReport);
 router.get('/charge-report', authMiddleware, ReportController.ChargeReport);
 router.get('/groups-report', authMiddleware, ReportController.groupsReport);
 
