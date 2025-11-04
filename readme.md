@@ -16,6 +16,9 @@ generar una tabla
 correr datos
 ## npx sequelize-cli db:seed:all --env development / cerar datos
 
+correr un archivo de datos
+## npx sequelize-cli db:seed --seed 7-categories.js
+
  correr servidor
 ## npm run dev 
 
