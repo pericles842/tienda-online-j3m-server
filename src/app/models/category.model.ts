@@ -76,6 +76,28 @@ export class CategoryModel extends Model<InferAttributes<CategoryModel>, InferCr
 
     return roots;
   }
+
+  /**
+   * obtiene el arbol de categorias por id o parent_id
+   *
+   * @static
+   * @param {PrimeNgNode[]} categories
+   * @param {number} id
+   * @return {*}  {(Promise<PrimeNgNode | null>)}
+   * @memberof CategoryModel
+   */
+  static async findCategoryById(categories: PrimeNgNode[], id: number): Promise<PrimeNgNode | null> {
+    for (const category of categories) {
+      if (category.id === id) {
+        return category;
+      }
+      if (category.children && category.children.length > 0) {
+        const found = await CategoryModel.findCategoryById(category.children, id);
+        if (found) return found;
+      }
+    }
+    return null;
+  }
 }
 
 CategoryModel.init(

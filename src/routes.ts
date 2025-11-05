@@ -43,6 +43,7 @@ router.delete('/role-group-permissions', authMiddleware, RoleController.deleteGr
 router.get('/categories-tree', CategoryController.getCategoriesTree);
 router.get('/categories', authMiddleware, CategoryController.getCategories);
 router.post('/create-category', authMiddleware, CategoryController.createCategory);
+router.put('/update-category', authMiddleware, CategoryController.updateCategory);
 
 //*Reportes de usuarios
 router.get('/users-report', ReportController.userReport);

@@ -33,7 +33,29 @@ export class CategoryController {
     try {
       let category = req.body;
       category = await CategoryModel.create(category);
-      res.json(category);
+      let categories = await CategoryModel.getCategoriesTree();
+
+      let node_categories =
+        (await CategoryModel.findCategoryById(categories, category.parent_id)) ||
+        (await CategoryModel.findCategoryById(categories, category.id));
+
+      res.json({ category, node_categories });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async updateCategory(req: Request, res: Response, next: NextFunction) {
+    try {
+      let category = req.body;
+      await CategoryModel.update(category, { where: { id: category.id } });
+      let categories = await CategoryModel.getCategoriesTree();
+
+      let node_categories =
+        (await CategoryModel.findCategoryById(categories, category.parent_id)) ||
+        (await CategoryModel.findCategoryById(categories, category.id));
+
+      res.json({ category, node_categories });
     } catch (err) {
       next(err);
     }
