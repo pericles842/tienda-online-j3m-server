@@ -39,7 +39,7 @@ export class CategoryController {
         (await CategoryModel.findCategoryById(categories, category.parent_id)) ||
         (await CategoryModel.findCategoryById(categories, category.id));
 
-      res.json({ category, node_categories });
+      res.json({ category, node_categories, categories });
     } catch (err) {
       next(err);
     }
@@ -55,6 +55,27 @@ export class CategoryController {
         (await CategoryModel.findCategoryById(categories, category.parent_id)) ||
         (await CategoryModel.findCategoryById(categories, category.id));
 
+      res.json({ category, node_categories, categories });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async deleteCategory(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+
+      let categories = await CategoryModel.getCategoriesTree();
+      let category = await CategoryModel.findOne({ where: { id } });
+
+      if (!category) throw 'No se encontro la categoria';
+
+      let node_categories =
+        (await CategoryModel.findCategoryById(categories, category.parent_id)) ||
+        (await CategoryModel.findCategoryById(categories, category.id));
+
+      //eliminamos la categoria
+      await CategoryModel.destroy({ where: { id } });
       res.json({ category, node_categories });
     } catch (err) {
       next(err);

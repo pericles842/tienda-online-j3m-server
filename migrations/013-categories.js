@@ -38,7 +38,7 @@ module.exports = {
         table: 'categories',
         field: 'id'
       },
-      onDelete: 'RESTRICT',
+      onDelete: 'CASCADE',
       onUpdate: 'CASCADE'
     });
   },
