@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -9,34 +9,39 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.createTable("dollar_rates", {
+    await queryInterface.createTable('dollar_rates', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
+      },
+      key: {
+        type: Sequelize.ENUM('bcv', 'binance'),
+        allowNull: false,
+        primaryKey: true
       },
       title: {
         type: Sequelize.STRING(255),
         allowNull: false,
-        primaryKey: true,
+        primaryKey: true
       },
       last_update: {
         type: Sequelize.STRING(255),
-        allowNull: false,
+        allowNull: false
       },
       price_old: {
         type: Sequelize.DOUBLE,
-        allowNull: false,
+        allowNull: false
       },
       price: {
         type: Sequelize.DOUBLE,
-        allowNull: false,
+        allowNull: false
       },
       url_img: {
         type: Sequelize.TEXT,
-        allowNull: true,
-      },
+        allowNull: true
+      }
     });
   },
 
@@ -48,6 +53,6 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
 
-    await queryInterface.dropTable("dollar_rates", null, {});
-  },
+    await queryInterface.dropTable('dollar_rates', null, {});
+  }
 };
