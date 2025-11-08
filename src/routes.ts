@@ -7,6 +7,7 @@ import { StatesController } from './app/controllers/state.controller';
 import { PublicGroupsController } from './app/controllers/public_groups.controller';
 import { ReportController } from './app/controllers/report.controller';
 import { CategoryController } from './app/controllers/category.controller';
+import { ConfigurationController } from './app/controllers/configuration.controller';
 
 const router = Router();
 
@@ -14,6 +15,11 @@ const router = Router();
 router.post('/users/create-client', UserController.createUser);
 router.post('/users/authenticate', UserController.authenticateUser);
 router.post('/users/refreshToken', UserController.refreshToken);
+
+//*CONFIGURATION
+router.get('/configuration', authMiddleware, ConfigurationController.getConfiguration);
+router.get('/configuration-public', ConfigurationController.getConfiguration);
+router.get('/rate-dollar-j3m', ConfigurationController.getRatesDollar);
 
 //*Usuarios
 router.get('/users', authMiddleware, UserController.getUsers);
