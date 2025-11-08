@@ -18,6 +18,7 @@ router.post('/users/refreshToken', UserController.refreshToken);
 
 //*CONFIGURATION
 router.get('/configuration', authMiddleware, ConfigurationController.getConfiguration);
+router.put('/configuration', authMiddleware, ConfigurationController.updateConfiguration);
 router.get('/configuration-public', ConfigurationController.getConfiguration);
 router.get('/rate-dollar-j3m', ConfigurationController.getRatesDollar);
 

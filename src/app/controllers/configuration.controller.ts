@@ -21,5 +21,12 @@ export class ConfigurationController {
     }
   }
 
-  static async updateConfig() {}
+  static async updateConfiguration(req: Request, res: Response, next: NextFunction) {
+    try {
+      const config = await ConfigurationModel.update(req.body, { where: { id: 1 } });
+      res.json(config);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
