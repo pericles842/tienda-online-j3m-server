@@ -1,11 +1,8 @@
 // src/middlewares/errorHandler.ts
-import { ErrorRequestHandler } from "express";
-import { TokenExpiredError } from "jsonwebtoken";
-import {
-  UniqueConstraintError,
-  ValidationError,
-  DatabaseError,
-} from "sequelize";
+import { ErrorRequestHandler } from 'express';
+import { TokenExpiredError } from 'jsonwebtoken';
+import { MulterError } from 'multer';
+import { UniqueConstraintError, ValidationError, DatabaseError, AccessDeniedError } from 'sequelize';
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   console.error(err);
@@ -14,7 +11,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     const value = err.errors[0]?.value;
     res.status(400).json({
       message: err.errors[0].message,
-      error: `El valor '${value}' ya está registrado, por favor ingresa otro.`,
+      error: `El valor '${value}' ya está registrado, por favor ingresa otro.`
     });
 
     return;
@@ -22,30 +19,43 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 
   if (err instanceof ValidationError) {
     res.status(400).json({
-      message: err.errors.map((e) => e.message).join(", "),
+      message: 'Error interno del servidor',
+      error: err.message
     });
     return;
   }
 
   if (err instanceof DatabaseError) {
     res.status(500).json({
-      message: "Error en la base de datos.",
+      message: 'Error en la base de datos.',
       error: err.name,
-      sqlError:err
+      sqlError: err
     });
     return;
   }
 
   if (err instanceof TokenExpiredError) {
     res.status(401).json({
-      message: "Error interno del servidor",
-      error: err.message,
+      message: 'Error interno del servidor',
+      error: err.message
     });
-
   }
 
+  if (err instanceof MulterError) {
+    res.status(500).json({
+      message: 'Error interno del servidor',
+      error: err.message
+    });
+  }
+  // if (err instanceof SequelizeValidationError) {
+  //   res.status(500).json({
+  //     message: 'Error interno del servidor',
+  //     error: err.message
+  //   });
+  // }
+
   res.status(500).json({
-    message: "Error interno del servidor",
-    error: err,
+    message: 'Error interno del servidor',
+    error: err
   });
 };

@@ -8,6 +8,7 @@ import { PublicGroupsController } from './app/controllers/public_groups.controll
 import { ReportController } from './app/controllers/report.controller';
 import { CategoryController } from './app/controllers/category.controller';
 import { ConfigurationController } from './app/controllers/configuration.controller';
+import { upload } from './middlewares/upload';
 
 const router = Router();
 
@@ -38,6 +39,8 @@ router.get('/parishes/:id_city', StatesController.getParishes);
 
 //*Cajas de ahorro
 router.get('/public_groups', PublicGroupsController.getPublicGroups);
+router.post('/public_groups', authMiddleware, upload.single('image'), PublicGroupsController.createPublicGroup);
+router.put('/public_groups', authMiddleware, upload.single('image'), PublicGroupsController.updatePublicGroup);
 
 //*ROLES Y CARGOS
 router.get('/roles', RoleController.getRoles);

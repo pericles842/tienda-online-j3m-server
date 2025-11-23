@@ -80,7 +80,7 @@ export class ReportController {
         { dataType: 'date', width: 'auto', key: 'created_at', label: 'Fecha ' }
       ];
 
-      const pdfBuffer = await generatePDF('reporte', {
+      const pdfBuffer = await generatePDF('Cajas de ahorro', {
         title: title,
         columns: columns,
         data: groups
