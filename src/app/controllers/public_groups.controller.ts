@@ -1,7 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import { extractKeyFromUrl, uploadToS3 } from '../../utils/awsBucketS3';
 import { PublicGroupsModel } from '../models/public_groups.model';
-import { json } from 'sequelize';
-import { uploadToS3 } from '../../utils/awsBucketS3';
 
 export class PublicGroupsController {
   /**
@@ -40,12 +39,16 @@ export class PublicGroupsController {
   static async updatePublicGroup(req: Request, res: Response, next: NextFunction) {
     try {
       let group = JSON.parse(req.body.group);
-      console.log(group)
 
       if (req.file) {
-        // group.url_img = (await uploadToS3(req.file, 'groups')).url;
-        // group = await PublicGroupsModel.create(group);
+        let key_url = extractKeyFromUrl('groups', group.url_img);
+        if (key_url) await uploadToS3(req.file, 'groups', key_url);
       }
+
+      if (req.file && !group.url_img) {
+        group.url_img = (await uploadToS3(req.file, 'groups')).url;
+      }
+      group = await PublicGroupsModel.update(group, { where: { id: group.id } });
 
       res.json(group);
     } catch (err) {

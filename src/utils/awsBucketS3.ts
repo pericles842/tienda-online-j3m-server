@@ -1,7 +1,6 @@
-import { S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand, ListObjectsV2Command } from '@aws-sdk/client-s3';
+import { DeleteObjectCommand, GetObjectCommand, ListObjectsV2Command, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import dotenv from 'dotenv';
-import path from 'path';
 import { optimizeImage, ResizeOptions } from './ImageOptimize';
 
 dotenv.config();
@@ -24,6 +23,7 @@ const BUCKET = process.env.AWS_BUCKET || '';
 export const uploadToS3 = async (
   file: any,
   folder: string,
+  keyToReplace?: string,
   format?: 'png' | 'jpg' | 'webp',
   width?: ResizeOptions
 ): Promise<{ key: string; url: string }> => {
@@ -32,14 +32,15 @@ export const uploadToS3 = async (
   const { buffer: optimized, mimeType, extension } = await optimizeImage(file.buffer, format, width);
 
   //extensión del archivo segun la optimization
-  const fileKey = `${folder}/${Date.now()}.${extension}`;
-
+  const fileKey = keyToReplace || `${folder}/${Date.now()}.${extension}`;
+  
   //parametros para la subida
   const uploadParams = {
     Bucket: BUCKET,
     Key: fileKey,
     Body: optimized,
-    ContentType: mimeType
+    ContentType: mimeType,
+    CacheControl: 'no-cache, no-store, must-revalidate'
   };
 
   await s3.send(new PutObjectCommand(uploadParams));
@@ -94,4 +95,13 @@ export const deleteFile = async (key: string) => {
 ----------------------------------------------------------*/
 export const getPublicUrl = (key: string) => {
   return `https://${BUCKET}.s3.amazonaws.com/${key}`;
+};
+
+export const extractKeyFromUrl = (folder: string, url: string): string | null => {
+  if (!url) return null;
+
+  const index = url.indexOf(`/${folder}/`);
+  if (index === -1) return null;
+
+  return url.substring(index + 1);
 };
