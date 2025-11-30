@@ -2,7 +2,7 @@
 import { ErrorRequestHandler } from 'express';
 import { TokenExpiredError } from 'jsonwebtoken';
 import { MulterError } from 'multer';
-import { UniqueConstraintError, ValidationError, DatabaseError, AccessDeniedError } from 'sequelize';
+import { UniqueConstraintError, ValidationError, DatabaseError, AccessDeniedError, ForeignKeyConstraintError } from 'sequelize';
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   console.error(err);
@@ -26,6 +26,15 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   }
 
   if (err instanceof DatabaseError) {
+    if (err instanceof ForeignKeyConstraintError) {
+      res.status(400).json({
+        message: 'Error de clave foránea.',
+        error: `El recurso no puede eliminarse o modificarse porque está siendo utilizado por otro registro.
+        elimina el registro para continuar.`
+      });
+      return;
+    }
+
     res.status(500).json({
       message: 'Error en la base de datos.',
       error: err.name,

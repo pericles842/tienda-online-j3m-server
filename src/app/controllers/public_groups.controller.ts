@@ -62,24 +62,25 @@ export class PublicGroupsController {
       let ids = req.query.id;
       const ids_array = Array.isArray(ids) ? ids.map(Number) : [Number(ids)];
       const groups = await PublicGroupsModel.findAll({ where: { id: { [Op.in]: ids_array } } });
-      //!RECUERDA PRIMERO ELIMINAR LOS REGISTROS Y SI SALE BIEN EJECUTA EL BORRADOD E IMAGENES
+
+      //* Eliminamos cajas de ahorro
+      // await PublicGroupsModel.destroy({
+      //   where: { id: { [Op.in]: ids_array } }
+      // });
+
       for (const group of groups) {
         if (group.url_img) {
           const key_url = extractKeyFromUrl('groups', group.url_img);
           //?ELIMINA LOS ARCHIVOS
+          console.log(key_url);
         }
       }
 
-      // await PublicGroupsModel.destroy({
-      //       where: { id: { [Op.in]: ids_array } }
-      //     });
+      await PublicGroupsModel.destroy({
+        where: { id: { [Op.in]: ids_array } }
+      });
 
-      // if (group && group.url_img) {
-      //   const key_url = extractKeyFromUrl('groups', group.url_img);
-      // }
-
-      // await PublicGroupsModel.destroy({ where: { id } });
-      res.json({ ids_array });
+      res.json({ ids: ids_array });
     } catch (err) {
       next(err);
     }
