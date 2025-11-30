@@ -1,4 +1,11 @@
-import { DeleteObjectCommand, GetObjectCommand, ListObjectsV2Command, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import {
+  DeleteObjectCommand,
+  DeleteObjectsCommand,
+  GetObjectCommand,
+  ListObjectsV2Command,
+  PutObjectCommand,
+  S3Client
+} from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import dotenv from 'dotenv';
 import { optimizeImage, ResizeOptions } from './ImageOptimize';
@@ -33,7 +40,7 @@ export const uploadToS3 = async (
 
   //extensión del archivo segun la optimization
   const fileKey = keyToReplace || `${folder}/${Date.now()}.${extension}`;
-  
+
   //parametros para la subida
   const uploadParams = {
     Bucket: BUCKET,
@@ -77,10 +84,27 @@ export const listFiles = async (folder: string) => {
   return data.Contents || [];
 };
 
-/* ---------------------------------------------------------
-   ELIMINAR UN ARCHIVO
-----------------------------------------------------------*/
-export const deleteFile = async (key: string) => {
+/**
+ * Elimina uno o varios archivos del bucket
+ *
+ * @param key url del archivo
+ * @example 'folder/relative_path'
+ * @returns
+ */
+export const deleteFile = async (key: string | string[]) => {
+  if (Array.isArray(key)) {
+    const command = new DeleteObjectsCommand({
+      Bucket: BUCKET,
+      Delete: {
+        Objects: key.map((k) => ({ Key: k }))
+      }
+    });
+
+    await s3.send(command);
+    return { deleted: true, keys: key };
+  }
+
+  // Borrar uno
   const command = new DeleteObjectCommand({
     Bucket: BUCKET,
     Key: key

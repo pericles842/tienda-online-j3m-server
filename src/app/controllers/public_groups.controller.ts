@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { Op } from 'sequelize';
 import { extractKeyFromUrl, uploadToS3 } from '../../utils/awsBucketS3';
 import { PublicGroupsModel } from '../models/public_groups.model';
 
@@ -51,6 +52,34 @@ export class PublicGroupsController {
       group = await PublicGroupsModel.update(group, { where: { id: group.id } });
 
       res.json(group);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async deletePublicGroup(req: Request, res: Response, next: NextFunction) {
+    try {
+      let ids = req.query.id;
+      const ids_array = Array.isArray(ids) ? ids.map(Number) : [Number(ids)];
+      const groups = await PublicGroupsModel.findAll({ where: { id: { [Op.in]: ids_array } } });
+      //!RECUERDA PRIMERO ELIMINAR LOS REGISTROS Y SI SALE BIEN EJECUTA EL BORRADOD E IMAGENES
+      for (const group of groups) {
+        if (group.url_img) {
+          const key_url = extractKeyFromUrl('groups', group.url_img);
+          //?ELIMINA LOS ARCHIVOS
+        }
+      }
+
+      // await PublicGroupsModel.destroy({
+      //       where: { id: { [Op.in]: ids_array } }
+      //     });
+
+      // if (group && group.url_img) {
+      //   const key_url = extractKeyFromUrl('groups', group.url_img);
+      // }
+
+      // await PublicGroupsModel.destroy({ where: { id } });
+      res.json({ ids_array });
     } catch (err) {
       next(err);
     }

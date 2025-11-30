@@ -41,6 +41,7 @@ router.get('/parishes/:id_city', StatesController.getParishes);
 router.get('/public_groups', PublicGroupsController.getPublicGroups);
 router.post('/public_groups', authMiddleware, upload.single('image'), PublicGroupsController.createPublicGroup);
 router.put('/public_groups', authMiddleware, upload.single('image'), PublicGroupsController.updatePublicGroup);
+router.delete('/public_groups', authMiddleware, PublicGroupsController.deletePublicGroup);
 
 //*ROLES Y CARGOS
 router.get('/roles', RoleController.getRoles);
