@@ -8,6 +8,7 @@ import { PublicGroupsController } from './app/controllers/public_groups.controll
 import { ReportController } from './app/controllers/report.controller';
 import { CategoryController } from './app/controllers/category.controller';
 import { ConfigurationController } from './app/controllers/configuration.controller';
+import { PayMethodController } from './app/controllers/pay_method.controller';
 import { upload } from './middlewares/upload';
 
 const router = Router();
@@ -56,6 +57,9 @@ router.get('/categories', authMiddleware, CategoryController.getCategories);
 router.post('/create-category', authMiddleware, CategoryController.createCategory);
 router.put('/update-category', authMiddleware, CategoryController.updateCategory);
 router.delete('/delete-category/:id', authMiddleware, CategoryController.deleteCategory);
+
+//*MÉTODOS DE PAGO
+router.post('/pay-methods', authMiddleware, upload.single('image'), PayMethodController.createPayMethod);
 
 //*Reportes de usuarios
 router.get('/users-report', ReportController.userReport);
