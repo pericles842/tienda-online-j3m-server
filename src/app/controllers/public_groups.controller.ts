@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { Op } from 'sequelize';
-import { extractKeyFromUrl, uploadToS3 } from '../../utils/awsBucketS3';
+import { deleteFile, extractKeyFromUrl, uploadToS3 } from '../../utils/awsBucketS3';
 import { PublicGroupsModel } from '../models/public_groups.model';
+import { convertQueryParamsArray } from '../../middlewares/arrays';
 
 export class PublicGroupsController {
   /**
@@ -60,25 +61,22 @@ export class PublicGroupsController {
   static async deletePublicGroup(req: Request, res: Response, next: NextFunction) {
     try {
       let ids = req.query.id;
-      const ids_array = Array.isArray(ids) ? ids.map(Number) : [Number(ids)];
+      const ids_array = convertQueryParamsArray(ids as string);
       const groups = await PublicGroupsModel.findAll({ where: { id: { [Op.in]: ids_array } } });
 
-      //* Eliminamos cajas de ahorro
-      // await PublicGroupsModel.destroy({
-      //   where: { id: { [Op.in]: ids_array } }
-      // });
-
+      let keys_url = [];
       for (const group of groups) {
         if (group.url_img) {
-          const key_url = extractKeyFromUrl('groups', group.url_img);
-          //?ELIMINA LOS ARCHIVOS
-          console.log(key_url);
+          let url = extractKeyFromUrl('groups', group.url_img);
+          if (url) keys_url.push(url);
         }
       }
 
       await PublicGroupsModel.destroy({
         where: { id: { [Op.in]: ids_array } }
       });
+
+      await deleteFile(keys_url);
 
       res.json({ ids: ids_array });
     } catch (err) {
