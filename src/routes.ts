@@ -59,6 +59,8 @@ router.put('/update-category', authMiddleware, CategoryController.updateCategory
 router.delete('/delete-category/:id', authMiddleware, CategoryController.deleteCategory);
 
 //*MÉTODOS DE PAGO
+router.get('/public-pay-methods', PayMethodController.getPayMethods);
+router.get('/pay-methods', authMiddleware, PayMethodController.getPayMethods);
 router.post('/pay-methods', authMiddleware, upload.single('image'), PayMethodController.createPayMethod);
 
 //*Reportes de usuarios

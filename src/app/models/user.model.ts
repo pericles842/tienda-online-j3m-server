@@ -47,6 +47,8 @@ export class Usuario extends Model<
       INNER JOIN cities ON cities.id = users.city_id
       INNER JOIN parishes ON parishes.id = users.parish_id
       INNER JOIN roles ON roles.id = users.rol_id `;
+
+      //! PELIGRO DE INJECTION SQL 
       if (id) {
         query += ` WHERE users.id = ${id};`;
       }

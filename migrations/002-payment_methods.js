@@ -1,39 +1,38 @@
-"use strict";
+'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("payment_methods", {
+    await queryInterface.createTable('payment_methods', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
       },
       name: {
         type: Sequelize.STRING(255),
-        allowNull: false,
+        allowNull: false
       },
       type: {
-        type: Sequelize.ENUM(
-          "pagomovil",
-          "tranferencia",
-          "billetera_digital",
-          "divisa"
-        ),
+        type: Sequelize.ENUM('pagomovil', 'tranferencia', 'billetera_digital', 'divisa'),
         allowNull: false,
-        defaultValue: "pagomovil",
+        defaultValue: 'pagomovil'
       },
-      datos:{
+      datos: {
         type: Sequelize.JSON,
         allowNull: true
       },
-      holder:{
+      holder: {
         type: Sequelize.STRING(255),
         allowNull: false
       },
-      url_img:{
+      url_img: {
         type: Sequelize.TEXT,
+        allowNull: true
+      },
+      created_at: {
+        type: Sequelize.DATE,
         allowNull: true
       }
     });
@@ -46,6 +45,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-       await queryInterface.dropTable("payment_methods", null, {});
-  },
+    await queryInterface.dropTable('payment_methods', null, {});
+  }
 };
