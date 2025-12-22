@@ -62,6 +62,8 @@ router.delete('/delete-category/:id', authMiddleware, CategoryController.deleteC
 router.get('/public-pay-methods', PayMethodController.getPayMethods);
 router.get('/pay-methods', authMiddleware, PayMethodController.getPayMethods);
 router.post('/pay-methods', authMiddleware, upload.single('image'), PayMethodController.createPayMethod);
+router.put('/pay-methods', authMiddleware, upload.single('image'), PayMethodController.updatePayMethod);
+router.delete('/pay-methods', authMiddleware, PayMethodController.deletePayMethod);
 
 //*Reportes de usuarios
 router.get('/users-report', ReportController.userReport);
