@@ -1,6 +1,7 @@
 export type PayMethodsTypes = 'pagomovil' | 'tranferencia' | 'billetera_digital' | 'divisa';
 
 export interface PayMethodMobilePay {
+  name_bank: string;
   code_bank: string;
   phone: string;
   documentation: number;
