@@ -64,10 +64,6 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true
       },
-      expiration_date: {
-        type: Sequelize.DATE,
-        allowNull: true
-      },
       attributes: {
         type: Sequelize.JSON,
         allowNull: true
@@ -88,6 +84,18 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: true
       }
+    });
+
+    await queryInterface.addConstraint('products', {
+      fields: ['category_id'],
+      type: 'foreign key',
+      name: 'fk_products_category_id',
+      references: {
+        table: 'categories',
+        field: 'id'
+      },
+      onDelete: 'RESTRICT',
+      onUpdate: 'CASCADE'
     });
 
     await queryInterface.addConstraint('products', {

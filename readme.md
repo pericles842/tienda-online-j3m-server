@@ -4,8 +4,6 @@ revertir migracion por nombre de archivo
 revertir todas las migraciones
 ## npx sequelize-cli db:migrate:undo:all
 
-revisar atributos de productos antes de correr mihraciones 
-falta label
 correr migraciones
 ## npx sequelize-cli db:migrate
 

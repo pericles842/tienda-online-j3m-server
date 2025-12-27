@@ -25,7 +25,7 @@ module.exports = {
         allowNull: false
       },
       description: {
-        type: Sequelize.JSON,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       attributes: {
