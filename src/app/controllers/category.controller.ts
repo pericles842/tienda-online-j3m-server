@@ -2,6 +2,14 @@ import { NextFunction, Request, Response } from 'express';
 import { CategoryModel } from '../models/category.model';
 
 export class CategoryController {
+  static async getPublicCategories(req: Request, res: Response, next: NextFunction) {
+    try {
+      const categories = await CategoryModel.findAll();
+      res.json(categories);
+    } catch (err) {
+      next(err);
+    }
+  }
   /**
    * Lista las categorias en arbol
    *
