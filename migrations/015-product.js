@@ -64,6 +64,10 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true
       },
+      type_product: {
+        type: Sequelize.STRING(150),
+        allowNull: false
+      },
       attributes: {
         type: Sequelize.JSON,
         allowNull: true
