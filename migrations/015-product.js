@@ -26,7 +26,7 @@ module.exports = {
       },
       description: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: true
       },
       discount: {
         type: Sequelize.DOUBLE,
@@ -34,6 +34,7 @@ module.exports = {
       },
       reference: {
         type: Sequelize.STRING(255),
+        unique: true,
         allowNull: false
       },
       cost: {
@@ -50,7 +51,7 @@ module.exports = {
       },
       min_stock: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
       },
       category_id: {
         type: Sequelize.INTEGER,

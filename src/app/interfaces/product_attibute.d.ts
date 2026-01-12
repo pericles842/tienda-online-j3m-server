@@ -9,6 +9,7 @@ export interface ProductAttributes<T, C = any> {
   attributes: ProductAttributes<C>[];
 }
 
+export type StatusProduct = 'active' | 'inactive' | 'damaged';
 export type ProductTemplateKeys = 'food' | 'technology' | 'textile' | 'farmacia' | 'other';
 export type UnitsOfProduct = 'un' | 'mg' | 'oz' | 'lb' | 'kg' | 'lt' | 'ml' | 'g';
 export type TallaProduct = 's' | 'm' | 'l' | 'xl' | 'xxl' | 'xxxl';
