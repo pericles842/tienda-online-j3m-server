@@ -21,7 +21,7 @@ export class ProductModel extends Model<InferAttributes<ProductModel>, InferCrea
 
   declare min_stock: number | null;
   declare category_id: number;
-  category_name?: string;
+  declare category_name?: string;
 
   declare status: StatusProduct;
   declare url_img?: string;
@@ -34,19 +34,25 @@ export class ProductModel extends Model<InferAttributes<ProductModel>, InferCrea
 
   declare updated_at: CreationOptional<number>;
   declare created_at: CreationOptional<Date>;
+  static async getAllProducts(productId: number | null = null): Promise<ProductModel[]> {
+    let query = `
+    SELECT 
+      categories.name as category_name,
+      users_create.email as email_user_create,
+      users_update.email as email_user_update,
+      products.* 
+    FROM products
+      INNER JOIN categories on products.category_id = categories.id
+      INNER JOIN users as users_create on products.user_create_id = users_create.id
+      LEFT JOIN users as users_update on products.user_update_id = users_update.id
+  `;
 
-  static async getAllProducts() {
-    let query = `SELECT 
-categories.name as category_name,
-users_create.email as email_user_create,
-users_update.email as email_user_update,
-products.* FROM products
-    INNER JOIN categories on products.category_id = categories.id
-    INNER JOIN users as users_create on products.user_create_id = users_create.id
-    LEFT JOIN users as users_update on products.user_update_id = users_update.id`;
+    if (productId) {
+      query += ` WHERE products.id = ?`;
+    }
 
-    const [products] = await sequelize.query(query);
-    return products;
+    const [rows] = await sequelize.query(query, { replacements: [productId] });
+    return rows as ProductModel[];
   }
 }
 

@@ -64,6 +64,7 @@ router.delete('/delete-category/:id', authMiddleware, CategoryController.deleteC
 //*PRODUCTOS
 router.get('/products-attributes', ProductController.getAllAttributesProduct);
 router.post('/products', upload.single('image'), authMiddleware, ProductController.createProduct);
+router.put('/products', upload.single('image'), authMiddleware, ProductController.updateProduct);
 router.get('/full-products', authMiddleware, ProductController.getAllFullProducts);
 
 //*MÉTODOS DE PAGO
