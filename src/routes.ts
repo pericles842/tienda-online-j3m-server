@@ -66,6 +66,9 @@ router.get('/products-attributes', ProductController.getAllAttributesProduct);
 router.post('/products', upload.single('image'), authMiddleware, ProductController.createProduct);
 router.put('/products', upload.single('image'), authMiddleware, ProductController.updateProduct);
 router.get('/full-products', authMiddleware, ProductController.getAllFullProducts);
+router.put('/products-status', authMiddleware, ProductController.updateStatusProduct);
+router.put('/products-supply-stock', authMiddleware, ProductController.supplyStock);
+router.delete('/products', authMiddleware, ProductController.deleteProduct);
 
 //*MÉTODOS DE PAGO
 router.get('/public-pay-methods', PayMethodController.getPayMethods);

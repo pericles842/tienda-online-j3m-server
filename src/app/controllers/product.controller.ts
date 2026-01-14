@@ -1,16 +1,63 @@
 import { log } from 'console';
 import { NextFunction, Request, Response } from 'express';
 import { decodeToken } from '../../utils/auth';
-import { extractKeyFromUrl, uploadToS3 } from '../../utils/awsBucketS3';
+import { deleteFile, extractKeyFromUrl, uploadToS3 } from '../../utils/awsBucketS3';
 import { CategoryModel } from '../models/category.model';
 import { ProductModel } from '../models/product.model';
 import { ProductAttributeModel } from '../models/product_attribute.model';
+import { convertQueryParamsArray } from '../../middlewares/arrays';
+import { PayMethodsModel } from '../models/pay_method.model';
+import { Op } from 'sequelize';
 
 export class ProductController {
   static async getAllAttributesProduct(req: Request, res: Response, next: NextFunction) {
     try {
       let attributes = await ProductAttributeModel.findAll();
       res.json(attributes);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async updateStatusProduct(req: Request, res: Response, next: NextFunction) {
+    try {
+      let product = req.body.data;
+      const token = req.headers.authorization;
+      const user = decodeToken(token as string);
+
+      await ProductModel.update(
+        {
+          status: product.status,
+          updated_at: Date.now(),
+          user_update_id: user.user.id
+        },
+        { where: { id: product.id } }
+      );
+
+      [product] = await ProductModel.getAllProducts(product.id);
+      res.json(product);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async supplyStock(req: Request, res: Response, next: NextFunction) {
+    try {
+      let product = req.body.data;
+      const token = req.headers.authorization;
+      const user = decodeToken(token as string);
+
+      await ProductModel.update(
+        {
+          stock: product.stock,
+          updated_at: Date.now(),
+          user_update_id: user.user.id
+        },
+        { where: { id: product.id } }
+      );
+
+      [product] = await ProductModel.getAllProducts(product.id);
+      res.json(product);
     } catch (err) {
       next(err);
     }
@@ -30,6 +77,8 @@ export class ProductController {
         product.url_img = (await uploadToS3(req.file, 'products')).url;
         product = await ProductModel.create(product);
       }
+
+      [product] = await ProductModel.getAllProducts(product.id);
 
       res.json(product);
     } catch (err) {
@@ -59,6 +108,32 @@ export class ProductController {
       [product] = await ProductModel.getAllProducts(product.id);
 
       res.json(product);
+    } catch (err) {
+      next(err);
+    }
+  }
+  static async deleteProduct(req: Request, res: Response, next: NextFunction) {
+    try {
+      let ids = req.query.id;
+
+      const ids_array = convertQueryParamsArray(ids as string);
+      const products = await ProductModel.findAll({ where: { id: { [Op.in]: ids_array } } });
+
+      let keys_url = [];
+      for (const product of products) {
+        if (product.url_img) {
+          let url = extractKeyFromUrl('products', product.url_img);
+          if (url) keys_url.push(url);
+        }
+      }
+
+      await ProductModel.destroy({
+        where: { id: { [Op.in]: ids_array } }
+      });
+
+      await deleteFile(keys_url);
+
+      res.json({ ids: ids_array });
     } catch (err) {
       next(err);
     }
