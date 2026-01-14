@@ -19,6 +19,25 @@ export class ProductController {
     }
   }
 
+  static async getAllPublicProducts(req: Request, res: Response, next: NextFunction) {
+    try {
+      let products = await ProductModel.getAllProducts();
+      res.json(products);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getProductById(req: Request, res: Response, next: NextFunction) {
+    try {
+      let id = req.params.id;
+      let [product] = await ProductModel.getAllProducts(Number(id));
+      res.json(product);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async updateStatusProduct(req: Request, res: Response, next: NextFunction) {
     try {
       let product = req.body.data;
