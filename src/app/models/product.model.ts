@@ -37,6 +37,7 @@ export class ProductModel extends Model<InferAttributes<ProductModel>, InferCrea
   static async getAllProducts(productId: number | null = null): Promise<ProductModel[]> {
     let query = `
     SELECT 
+       0 as quantity,
       categories.name as category_name,
       users_create.email as email_user_create,
       users_update.email as email_user_update,
