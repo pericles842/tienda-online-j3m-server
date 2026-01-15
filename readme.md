@@ -23,4 +23,4 @@ correr un archivo de datos
 ## npm run dev 
 
 subir cambios
-## railway run
+## railway up
