@@ -1,18 +1,20 @@
 // src/routes/user.routes.ts
 import { Router } from 'express';
+import {
+    ProductOnOfferController,
+    ProductController,
+    PayMethodController,
+    ConfigurationController,
+    CategoryController,
+    ReportController,
+    PublicGroupsController,
+    StatesController,
+    RoleController,
+    UserController,
+} from './app/controllers';
 import { authMiddleware } from './middlewares/authMiddleware';
-import { UserController } from './app/controllers/user.controller';
-import { RoleController } from './app/controllers/role.controller';
-import { StatesController } from './app/controllers/state.controller';
-import { PublicGroupsController } from './app/controllers/public_groups.controller';
-import { ReportController } from './app/controllers/report.controller';
-import { CategoryController } from './app/controllers/category.controller';
-import { ConfigurationController } from './app/controllers/configuration.controller';
-import { PayMethodController } from './app/controllers/pay_method.controller';
 import { upload } from './middlewares/upload';
 import { ProductAttributeModel } from './app/models/product_attribute.model';
-import { ProductController } from './app/controllers/product.controller';
-
 const router = Router();
 
 //*Autenticacion
@@ -71,6 +73,11 @@ router.get('/full-products', authMiddleware, ProductController.getAllFullProduct
 router.put('/products-status', authMiddleware, ProductController.updateStatusProduct);
 router.put('/products-supply-stock', authMiddleware, ProductController.supplyStock);
 router.delete('/products', authMiddleware, ProductController.deleteProduct);
+
+//*PRODUCTOS EN OFERTA
+router.get('/products-on-offer', ProductOnOfferController.getProductOnOffer);
+router.post('/products-on-offer', authMiddleware, ProductOnOfferController.createProductOnOffer);
+router.delete('/products-on-offer', authMiddleware, ProductOnOfferController.deleteProductOnOffer);
 
 //*MÉTODOS DE PAGO
 router.get('/public-pay-methods', PayMethodController.getPayMethods);

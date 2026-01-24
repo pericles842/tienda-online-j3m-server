@@ -1,0 +1,10 @@
+export { ProductOnOfferController } from './products_on_offer.controller';
+export { ProductController } from './product.controller';
+export { CategoryController } from './category.controller';
+export { ConfigurationController } from './configuration.controller';
+export { PayMethodController } from './pay_method.controller';
+export { PublicGroupsController } from './public_groups.controller';
+export { ReportController } from './report.controller';
+export { RoleController } from './role.controller';
+export { StatesController } from './state.controller';
+export { UserController } from './user.controller';
