@@ -8,20 +8,22 @@ export class ProductOnOfferController {
 
   static async createProductOnOffer(req: Request, res: Response, next: NextFunction) {
     try {
-      //?Caputara el id por parametro del producto
-
-      const ids = req.body;
+      // Capturar los IDs de los productos desde el cuerpo de la petición
+      let ids: number[] = req.body;
 
       if (!Array.isArray(ids) || ids.length === 0) {
         throw new Error('Debe insertar al menos un ID en un arreglo');
       }
 
+      // Asegurar que sean números únicos y válidos
+      ids = [...new Set(ids.map(Number).filter((id) => !isNaN(id)))];
+
+      if (ids.length === 0) {
+        throw new Error('Debe insertar al menos un ID de producto válido');
+      }
+
       const productsExist = await ProductModel.findAll({
-        where: {
-          id: {
-            [Op.in]: ids
-          }
-        }
+        where: { id: { [Op.in]: ids } }
       });
 
       if (productsExist.length !== ids.length) {
