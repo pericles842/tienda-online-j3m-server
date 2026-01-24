@@ -4,15 +4,6 @@ import { Op } from 'sequelize';
 import { convertQueryParamsArray } from '../../middlewares/arrays';
 
 export class ProductOnOfferController {
-  //LOS METODOS SON STATIC ASYCN
-  //      static async getParishes(req: Request, res: Response, next: NextFunction) {
-  //     try {
-  //       const roles = await States.getParishes(parseInt(req.params.id_city));
-  //       res.json(roles);
-  //     } catch (err) {
-  //       next(err);
-  //     }
-  //   }
 
   static async createProductOnOffer(req: Request, res: Response, next: NextFunction) {
     try {

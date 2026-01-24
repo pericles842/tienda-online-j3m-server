@@ -1,8 +1,10 @@
 node_modules/
+postman/
 
 .env
 .env.prod
 .env.local
+
 
 logs/
 
