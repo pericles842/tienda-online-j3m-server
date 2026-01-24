@@ -1,0 +1,108 @@
+{
+  "info": {
+    "_postman_id": "b2112e3b-f970-4a4b-8626-8cb74271d827",
+    "name": "Outh",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Crear Usuario",
+      "id": "16c8714e-f1e4-4cfe-8656-569445234c44",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"Virginia del carmen\",\r\n    \"last_name\": \"Castilla\",\r\n    \"email\": \"virgisnissss@gmail.com\",\r\n    \"phone\": \"3323\",\r\n    \"phone_2\": \"04248473847\",\r\n    \"age\":21,\r\n    \"password\": \"virginia\",\r\n    \"campo2\":\"sssss\",\r\n    \"ci\": \"121112\",\r\n    \"url_img\": \"null\",\r\n    \"rol_id\": 6,\r\n    \"public_group_id\": 2,\r\n    \"state_id\": 24,\r\n    \"city_id\": 462,\r\n    \"parish_id\": 1126\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}/users/create",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "users",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "1b6b857c-5be8-4c41-b241-0d35217dbddc",
+            "exec": [
+              "pm.environment.set(\"authorization\", pm.response.json().accessToken);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "id": "3de82abf-b0ed-43e4-8c4c-bd0d4bed0cac",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n   \"email\":\"admin@gmail.com\",\r\n   \"password\":\"admin\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}/users/authenticate",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "users",
+            "authenticate"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "refreshToken",
+      "id": "cc55ce43-6bb8-4b3f-95cf-9f030ca7d99b",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n   \"email\":\"admin@gmail.com\",\r\n   \"password\":\"admin\"\r\n}"
+        },
+        "url": {
+          "raw": "{{host}}/users/refreshToken",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "users",
+            "refreshToken"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

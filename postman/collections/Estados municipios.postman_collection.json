@@ -1,0 +1,95 @@
+{
+  "info": {
+    "_postman_id": "0de8512d-63f8-4aa4-8279-07e4fbc13695",
+    "name": "Estados municipios",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Listar estados",
+      "id": "d1da6249-e384-40ed-9c32-6a0a2e78de7d",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n   \"email\":\"virgini@gmail.com\",\r\n   \"password\":\"virsginia\"\r\n}"
+        },
+        "url": {
+          "raw": "{{host}}/states",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "states"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar ciudades",
+      "id": "99084966-e18f-4e21-a0a7-c7c774984c3f",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n   \"email\":\"virgini@gmail.com\",\r\n   \"password\":\"virsginia\"\r\n}"
+        },
+        "url": {
+          "raw": "{{host}}/cities/24",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "cities",
+            "24"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar parroquias",
+      "id": "6b4b533d-5c6a-459b-bd86-591882933afb",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n   \"email\":\"virgini@gmail.com\",\r\n   \"password\":\"virsginia\"\r\n}"
+        },
+        "url": {
+          "raw": "{{host}}/parishes/462",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "parishes",
+            "462"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

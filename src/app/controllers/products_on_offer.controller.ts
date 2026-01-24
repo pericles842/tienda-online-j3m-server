@@ -15,92 +15,57 @@ export class ProductOnOfferController {
   //   }
 
   static async createProductOnOffer(req: Request, res: Response, next: NextFunction) {
-
     try {
+      //?Caputara el id por parametro del producto
 
+      // const { product_id } = req.params;
       const { product_id } = req.body;
 
-      if (!product_id) {
-
-        throw 'El ID del producto es requerido'
-
-      }
+      if (!product_id) throw 'El ID del producto es requerido';
 
       const existing = await ProductOnOffer.findOne({
-        where: {
-          product_id: product_id
-        }
-      })
+        where: { product_id: product_id }
+      });
 
-      if (existing) {
-
-        throw 'Este producto ya esta en oferta'
-
-      }
+      if (existing) throw 'Este producto ya esta en oferta';
 
       const productOnOffer = await ProductOnOffer.create({
-        product_id: product_id,
+        product_id: product_id
       });
 
       res.status(201).json(productOnOffer);
     } catch (err) {
-
       next(err);
-
     }
-
   }
 
   static async deleteProductOnOffer(req: Request, res: Response, next: NextFunction) {
-
     try {
-
       let ids = req.query.id;
 
-      if (!ids) {
-
-        throw 'Debe insertar al menos un ID';
-
-      }
+      if (!ids) throw 'Debe insertar al menos un ID';
 
       const ids_array = convertQueryParamsArray(ids as string);
 
       await ProductOnOffer.destroy({
-        where: {
-          id: {
-            [Op.in]: ids_array
-          }
-        }
-      })
+        where: { id: { [Op.in]: ids_array } }
+      });
 
       res.status(200).json({
         message: 'Productos eliminados correctamente'
-      })
-
+      });
     } catch (err) {
-
       next(err);
-
     }
-
   }
 
   static async getProductOnOffer(req: Request, res: Response, next: NextFunction) {
-
     try {
-
       const products = await ProductOnOffer.getProductsOnOffer();
 
       res.json(products);
-
     } catch (err) {
-
       next(err);
-
     }
-
   }
-
-
-
 }

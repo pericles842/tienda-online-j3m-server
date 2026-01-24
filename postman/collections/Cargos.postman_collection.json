@@ -1,0 +1,254 @@
+{
+  "info": {
+    "_postman_id": "65116fb6-b3fb-4b29-a56f-7cb7abfd2928",
+    "name": "Cargos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Listar roles",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "9d8939b7-4c56-4789-bf9e-65a65f9cef29",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "id": "99cebf6f-20e0-4a06-88fb-279f9e895051",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "jwt",
+          "jwt": [
+            {
+              "key": "algorithm",
+              "value": "HS256",
+              "type": "string"
+            },
+            {
+              "key": "isSecretBase64Encoded",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "key": "payload",
+              "value": "{}",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            },
+            {
+              "key": "headerPrefix",
+              "value": "Bearer",
+              "type": "string"
+            },
+            {
+              "key": "queryParamKey",
+              "value": "token",
+              "type": "string"
+            },
+            {
+              "key": "header",
+              "value": "{}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n   \"email\":\"virgini@gmail.com\",\r\n   \"password\":\"virginia\"\r\n}"
+        },
+        "url": {
+          "raw": "{{host}}/roles",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "roles"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear un cargo",
+      "id": "cb49402c-f11e-464d-ba1a-5cc2ec1a2596",
+      "request": {
+        "auth": {
+          "type": "jwt",
+          "jwt": [
+            {
+              "key": "algorithm",
+              "value": "HS256",
+              "type": "string"
+            },
+            {
+              "key": "isSecretBase64Encoded",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "key": "payload",
+              "value": "{}",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            },
+            {
+              "key": "headerPrefix",
+              "value": "Bearer",
+              "type": "string"
+            },
+            {
+              "key": "queryParamKey",
+              "value": "token",
+              "type": "string"
+            },
+            {
+              "key": "header",
+              "value": "{}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"sss\",\r\n    \"description\": \"ssss\",\r\n    \"permissions\": [\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 1,\r\n            \"module\": \"Configuración\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": true,\r\n            \"can_delete\": true\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 2,\r\n            \"module\": \"Cargos y permisos\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": true,\r\n            \"can_delete\": true\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 3,\r\n            \"module\": \"Usuarios\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": true,\r\n            \"can_delete\": true\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 4,\r\n            \"module\": \"Categorías\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 5,\r\n            \"module\": \"Productos\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 6,\r\n            \"module\": \"Ventas\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 7,\r\n            \"module\": \"Cajas de ahorro\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 8,\r\n            \"module\": \"Inventario\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 9,\r\n            \"module\": \"Estadisticas de ventas\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 10,\r\n            \"module\": \"Métodos de pago\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        }\r\n    ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}/create-role",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "create-role"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar cargos con permisos",
+      "id": "10f47337-ba4a-4b46-8997-f15823c5cd57",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "jwt",
+          "jwt": [
+            {
+              "key": "algorithm",
+              "value": "HS256",
+              "type": "string"
+            },
+            {
+              "key": "isSecretBase64Encoded",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "key": "payload",
+              "value": "{}",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            },
+            {
+              "key": "headerPrefix",
+              "value": "Bearer",
+              "type": "string"
+            },
+            {
+              "key": "queryParamKey",
+              "value": "token",
+              "type": "string"
+            },
+            {
+              "key": "header",
+              "value": "{}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"sss\",\r\n    \"description\": \"ssss\",\r\n    \"permissions\": [\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 1,\r\n            \"module\": \"Configuración\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": true,\r\n            \"can_delete\": true\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 2,\r\n            \"module\": \"Cargos y permisos\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": true,\r\n            \"can_delete\": true\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 3,\r\n            \"module\": \"Usuarios\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": true,\r\n            \"can_delete\": true\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 4,\r\n            \"module\": \"Categorías\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 5,\r\n            \"module\": \"Productos\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 6,\r\n            \"module\": \"Ventas\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 7,\r\n            \"module\": \"Cajas de ahorro\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 8,\r\n            \"module\": \"Inventario\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 9,\r\n            \"module\": \"Estadisticas de ventas\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        },\r\n        {\r\n            \"id\": 0,\r\n            \"module_id\": 10,\r\n            \"module\": \"Métodos de pago\",\r\n            \"can_view\": false,\r\n            \"can_create\": false,\r\n            \"can_update\": false,\r\n            \"can_delete\": false\r\n        }\r\n    ]\r\n}"
+        },
+        "url": {
+          "raw": "{{host}}/role-permissions",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "role-permissions"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "b9449269-1de0-4c57-a633-2a2fb07983cd",
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "pm.request.headers.add({\r",
+          "    key: \"authorization\",\r",
+          "    value: pm.environment.get(\"authorization\")\r",
+          "});\r",
+          "\r",
+          "pm.request.headers.add({\r",
+          "    key: \"module_id\",\r",
+          "    value: 2\r",
+          "});"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "f5d9bbbe-a757-4d2e-9458-d73197754d38",
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}

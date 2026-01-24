@@ -1,16 +1,16 @@
 // src/routes/user.routes.ts
 import { Router } from 'express';
 import {
-    ProductOnOfferController,
-    ProductController,
-    PayMethodController,
-    ConfigurationController,
-    CategoryController,
-    ReportController,
-    PublicGroupsController,
-    StatesController,
-    RoleController,
-    UserController,
+  ProductOnOfferController,
+  ProductController,
+  PayMethodController,
+  ConfigurationController,
+  CategoryController,
+  ReportController,
+  PublicGroupsController,
+  StatesController,
+  RoleController,
+  UserController
 } from './app/controllers';
 import { authMiddleware } from './middlewares/authMiddleware';
 import { upload } from './middlewares/upload';

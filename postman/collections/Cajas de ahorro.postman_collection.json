@@ -1,0 +1,71 @@
+{
+  "info": {
+    "_postman_id": "3c471251-1cb3-423d-be6f-b00c0f747779",
+    "name": "Cajas de ahorro",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Listar cajas de ahorro",
+      "id": "a37dd58f-63fc-4305-9bf8-5905998da703",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n   \"email\":\"virgini@gmail.com\",\r\n   \"password\":\"virsginia\"\r\n}"
+        },
+        "url": {
+          "raw": "{{host}}/public_groups",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "public_groups"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "d98565ad-689d-4456-b8e1-c628c0da726c",
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "pm.request.headers.add({\r",
+          "    key: \"authorization\",\r",
+          "    value: pm.environment.get(\"authorization\")\r",
+          "});\r",
+          "\r",
+          "pm.request.headers.add({\r",
+          "    key: \"module_id\",\r",
+          "    value: 7\r",
+          "});"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "e18451ec-be99-4a78-8b8d-f28a63f7c3e5",
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
