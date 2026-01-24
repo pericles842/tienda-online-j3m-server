@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ProductOnOffer } from '../models/products_on_offer.model';
+import { ProductModel } from '../models/product.model';
 import { Op } from 'sequelize';
 import { convertQueryParamsArray } from '../../middlewares/arrays';
 
@@ -9,20 +10,42 @@ export class ProductOnOfferController {
     try {
       //?Caputara el id por parametro del producto
 
-      // const { product_id } = req.params;
-      const { product_id } = req.body;
+      const ids = req.body;
 
-      if (!product_id) throw 'El ID del producto es requerido';
+      if (!Array.isArray(ids) || ids.length === 0) {
+        throw new Error('Debe insertar al menos un ID en un arreglo');
+      }
 
-      const existing = await ProductOnOffer.findOne({
-        where: { product_id: product_id }
+      const productsExist = await ProductModel.findAll({
+        where: {
+          id: {
+            [Op.in]: ids
+          }
+        }
       });
 
-      if (existing) throw 'Este producto ya esta en oferta';
+      if (productsExist.length !== ids.length) {
+        const foundIds = productsExist.map(p => p.id);
+        const missingIds = ids.filter(id => !foundIds.includes(id));
+        throw new Error(`Los siguientes IDs de producto no existen: ${missingIds.join(', ')}`);
+      }
 
-      const productOnOffer = await ProductOnOffer.create({
-        product_id: product_id
-      });
+      const existing = await ProductOnOffer.findAll({
+        where: {
+          product_id: {
+            [Op.in]: ids
+          }
+        }
+      })
+
+      if (existing.length > 0) {
+        const existingIds = existing.map(e => e.product_id);
+        throw new Error(`Algunos de los productos ya están en oferta: ${existingIds.join(', ')}`);
+      }
+
+      const productOnOffer = await ProductOnOffer.bulkCreate(
+        ids.map((id: number) => ({ product_id: id }))
+      );
 
       res.status(201).json(productOnOffer);
     } catch (err) {
@@ -34,7 +57,9 @@ export class ProductOnOfferController {
     try {
       let ids = req.query.id;
 
-      if (!ids) throw 'Debe insertar al menos un ID';
+      if (!ids) {
+        throw new Error('Debe insertar al menos un ID');
+      }
 
       const ids_array = convertQueryParamsArray(ids as string);
 
