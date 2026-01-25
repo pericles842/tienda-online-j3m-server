@@ -65,15 +65,19 @@ export class ProductModel extends Model<InferAttributes<ProductModel>, InferCrea
     return rows as ProductModel[];
   }
 
-  static async getProductsFilter(searchTerm: string | null = null): Promise<ProductModel[]> {
+  static async getProductsFilter(searchTerm: string | null = null, page: number, limit: number): Promise<{ data: ProductModel[], total: number, totalPages: number }> {
+
+
     let query = ProductModel.baseQuery;
-    const params: any = {};
+
+    const params: any = { limit, offset: (page - 1) * limit };
+
+    let whereQuery = '';
 
     if (searchTerm && searchTerm.trim() !== '') {
-      // Limpiamos el término por si viene con slashes (como hacías con category)
+
       const cleanTerm = searchTerm.endsWith('/') ? searchTerm.slice(0, -1) : searchTerm;
 
-      // Agregamos la condición universal
       query += ` WHERE (
       products.name LIKE :term OR 
       categories.name LIKE :term OR 
@@ -84,12 +88,23 @@ export class ProductModel extends Model<InferAttributes<ProductModel>, InferCrea
       params.term = `%${cleanTerm}%`;
     }
 
-    const rows = await sequelize.query(query, {
+    const countQuery = `SELECT COUNT(*) as total FROM (${query} ${whereQuery}) as results`;
+
+    const countRows: any = await sequelize.query(countQuery, {
       replacements: params,
       type: QueryTypes.SELECT
     });
 
-    return rows as ProductModel[];
+    const totalRows = parseInt(countRows[0].total);
+    const totalPages = Math.ceil(totalRows / limit);
+
+    const dataQuery = `${query} ${whereQuery} LIMIT :limit OFFSET :offset`;
+    const rows = await sequelize.query(dataQuery, {
+      replacements: params,
+      type: QueryTypes.SELECT
+    });
+
+    return { data: rows as ProductModel[], total: totalRows, totalPages };
   }
 }
 
