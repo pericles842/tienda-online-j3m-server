@@ -166,4 +166,16 @@ export class ProductController {
       next(err);
     }
   }
+
+  static async getAllProductsByFilter(req: Request, res: Response, next: NextFunction) {
+    try {
+      const search = req.query.search as string;
+
+      let products = await ProductModel.getProductsFilter(search);
+
+      res.json(products);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
