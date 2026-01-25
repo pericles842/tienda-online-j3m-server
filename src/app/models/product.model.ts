@@ -1,4 +1,4 @@
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, QueryTypes } from 'sequelize';
 import { sequelize } from '../config/db';
 import {
   ProductAttributes,
@@ -34,25 +34,61 @@ export class ProductModel extends Model<InferAttributes<ProductModel>, InferCrea
 
   declare updated_at: CreationOptional<number>;
   declare created_at: CreationOptional<Date>;
-  static async getAllProducts(productId: number | null = null): Promise<ProductModel[]> {
-    let query = `
+
+  private static baseQuery = `
     SELECT 
-       0 as quantity,
+      0 as quantity,
       categories.name as category_name,
       users_create.email as email_user_create,
       users_update.email as email_user_update,
       products.* 
     FROM products
-      INNER JOIN categories on products.category_id = categories.id
-      INNER JOIN users as users_create on products.user_create_id = users_create.id
-      LEFT JOIN users as users_update on products.user_update_id = users_update.id
+    INNER JOIN categories on products.category_id = categories.id
+    INNER JOIN users as users_create on products.user_create_id = users_create.id
+    LEFT JOIN users as users_update on products.user_update_id = users_update.id
   `;
+
+  static async getAllProducts(productId: number | null = null): Promise<ProductModel[]> {
+    let query = ProductModel.baseQuery;
+    let replacements: any = [];
 
     if (productId) {
       query += ` WHERE products.id = ?`;
+      replacements = [productId];
     }
 
-    const [rows] = await sequelize.query(query, { replacements: [productId] });
+    const rows = await sequelize.query(query, {
+      replacements,
+      type: QueryTypes.SELECT
+    });
+
+    return rows as ProductModel[];
+  }
+
+  static async getProductsFilter(searchTerm: string | null = null): Promise<ProductModel[]> {
+    let query = ProductModel.baseQuery;
+    const params: any = {};
+
+    if (searchTerm && searchTerm.trim() !== '') {
+      // Limpiamos el término por si viene con slashes (como hacías con category)
+      const cleanTerm = searchTerm.endsWith('/') ? searchTerm.slice(0, -1) : searchTerm;
+
+      // Agregamos la condición universal
+      query += ` WHERE (
+      products.name LIKE :term OR 
+      categories.name LIKE :term OR 
+      products.brand LIKE :term OR 
+      products.reference LIKE :term
+    )`;
+
+      params.term = `%${cleanTerm}%`;
+    }
+
+    const rows = await sequelize.query(query, {
+      replacements: params,
+      type: QueryTypes.SELECT
+    });
+
     return rows as ProductModel[];
   }
 }
