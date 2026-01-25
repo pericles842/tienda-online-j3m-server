@@ -73,7 +73,7 @@ router.get('/full-products', authMiddleware, ProductController.getAllFullProduct
 router.put('/products-status', authMiddleware, ProductController.updateStatusProduct);
 router.put('/products-supply-stock', authMiddleware, ProductController.supplyStock);
 router.delete('/products', authMiddleware, ProductController.deleteProduct);
-router.get('/products-filter', authMiddleware, ProductController.getAllProductsByFilter);
+router.get('/products-filter', ProductController.getAllProductsByFilter);
 
 //*PRODUCTOS EN OFERTA
 router.get('/products-on-offer', ProductOnOfferController.getProductOnOffer);
