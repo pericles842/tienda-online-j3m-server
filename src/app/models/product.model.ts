@@ -22,6 +22,7 @@ export class ProductModel extends Model<InferAttributes<ProductModel>, InferCrea
   declare min_stock: number | null;
   declare category_id: number;
   declare category_name?: string;
+  declare quantity?: number;
 
   declare status: StatusProduct;
   declare url_img?: string;

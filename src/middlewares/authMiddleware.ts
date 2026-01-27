@@ -7,7 +7,7 @@ const JWT_SECRET: string = process.env.JWT_SECRET || "";
 
 export async function authMiddleware(
   req: Request,
-  res: Response,
+  res: Response,  
   next: NextFunction
 ): Promise<void> {
   const token = req.headers["authorization"];

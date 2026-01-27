@@ -10,7 +10,7 @@ export class SalesModel extends Model<InferAttributes<SalesModel>, InferCreation
   declare reference: string;
   declare pay_method_id: number;
   declare url_img: string;
-  declare status: 'approved' | 'refused' | 'pending';
+  declare status?: 'approved' | 'refused' | 'pending';
   declare approved_user_id: number | null;
   declare rejected_user_id: number | null;
   declare updated_at: CreationOptional<Date>;
@@ -60,16 +60,17 @@ SalesModel.init(
     },
     approved_user_id: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      defaultValue: null
     },
     rejected_user_id: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      defaultValue: null
     },
     updated_at: {
       type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: DataTypes.NOW
+      allowNull: true
     },
     created_at: {
       type: DataTypes.DATE,
