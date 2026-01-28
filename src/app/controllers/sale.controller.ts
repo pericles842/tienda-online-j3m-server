@@ -40,7 +40,7 @@ export class SalesController {
         if (!info) throw new Error('Producto inválido');
 
         if (product.stock < info.quantity) {
-          res.status(409).json({ error: `Stock insuficiente para ${product.name}`, key: 'NO_STOCK' });
+          res.status(409).json({ error: `Carrito desactualizado stock insuficiente para ${product.name}`, key: 'NO_STOCK' });
           return;
         }
 
@@ -66,7 +66,7 @@ export class SalesController {
 
       let sale: SalesModel;
       let url_img: string | null = null;
-      
+
       if (req.file && saleDetails) {
         url_img = (await uploadToS3(req.file, 'user_payments')).url;
         sale = await SalesModel.create({
