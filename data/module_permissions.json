@@ -478,5 +478,53 @@
     "can_create": false,
     "can_update": false,
     "can_delete": false
+  },
+  {
+    "role_id": 1,
+    "module_id": 11,
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
+  },
+  {
+    "role_id": 2,
+    "module_id": 11,
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
+  },
+  {
+    "role_id": 3,
+    "module_id": 11,
+    "can_view": true,
+    "can_create": true,
+    "can_update": true,
+    "can_delete": true
+  },
+  {
+    "role_id": 4,
+    "module_id": 11,
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
+  },
+  {
+    "role_id": 5,
+    "module_id": 11,
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
+  },
+  {
+    "role_id": 6,
+    "module_id": 11,
+    "can_view": false,
+    "can_create": false,
+    "can_update": false,
+    "can_delete": false
   }
 ]

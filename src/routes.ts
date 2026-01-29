@@ -1,18 +1,20 @@
 // src/routes/user.routes.ts
 import { Router } from 'express';
-import { CategoryController } from './app/controllers/category.controller';
-import { ConfigurationController } from './app/controllers/configuration.controller';
-import { PayMethodController } from './app/controllers/pay_method.controller';
-import { ProductController } from './app/controllers/product.controller';
-import { PublicGroupsController } from './app/controllers/public_groups.controller';
-import { ReportController } from './app/controllers/report.controller';
-import { RoleController } from './app/controllers/role.controller';
-import { SalesController } from './app/controllers/sale.controller';
-import { StatesController } from './app/controllers/state.controller';
-import { UserController } from './app/controllers/user.controller';
+import {
+  CategoryController,
+  ConfigurationController,
+  PayMethodController,
+  ProductController,
+  ProductOnOfferController,
+  PublicGroupsController,
+  ReportController,
+  RoleController,
+  SalesController,
+  StatesController,
+  UserController,
+} from './app/controllers';
 import { authMiddleware } from './middlewares/authMiddleware';
 import { upload } from './middlewares/upload';
-
 const router = Router();
 
 //*Autenticacion
@@ -71,6 +73,12 @@ router.get('/full-products', authMiddleware, ProductController.getAllFullProduct
 router.put('/products-status', authMiddleware, ProductController.updateStatusProduct);
 router.put('/products-supply-stock', authMiddleware, ProductController.supplyStock);
 router.delete('/products', authMiddleware, ProductController.deleteProduct);
+router.get('/products-filter', ProductController.getAllProductsByFilter);
+
+//*PRODUCTOS EN OFERTA
+router.get('/products-on-offer', ProductOnOfferController.getProductOnOffer);
+router.post('/products-on-offer', authMiddleware, ProductOnOfferController.createProductOnOffer);
+router.delete('/products-on-offer', authMiddleware, ProductOnOfferController.deleteProductOnOffer);
 
 //*VENTAS DE USUARIOS
 router.post('/payment', upload.single('image'), SalesController.createPayForUser);
