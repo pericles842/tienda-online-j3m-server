@@ -82,6 +82,7 @@ router.delete('/products-on-offer', authMiddleware, ProductOnOfferController.del
 
 //*VENTAS DE USUARIOS
 router.post('/payment', upload.single('image'), SalesController.createPayForUser);
+router.get('/sales', SalesController.getAllSales);
 
 //*MÉTODOS DE PAGO
 router.get('/public-pay-methods', PayMethodController.getPayMethods);

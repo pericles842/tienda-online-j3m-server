@@ -111,6 +111,7 @@ export class ProductController {
       const user = decodeToken(token as string);
       let product = JSON.parse(req.body.product);
 
+
       product.user_update_id = user.user.id;
       product.updated_at = Date.now();
 

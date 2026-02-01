@@ -105,4 +105,15 @@ export class SalesController {
       next(err);
     }
   }
+
+  static async getAllSales(req: Request, res: Response, next: NextFunction) {
+    try {
+      const token = req.headers.authorization;
+      const user = decodeToken(token as string);
+      const sales = await SalesModel.findAll();
+      res.json(sales);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
