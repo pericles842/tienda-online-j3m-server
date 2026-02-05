@@ -2,7 +2,7 @@ import { log } from 'console';
 import { NextFunction, Request, Response } from 'express';
 import { Op } from 'sequelize';
 import { decodeToken } from '../../utils/auth';
-import { uploadToS3 } from '../../utils/awsBucketS3';
+import { extractKeyFromUrl, getSignedFileUrl, uploadToS3 } from '../../utils/awsBucketS3';
 import { ProductModel } from '../models/product.model';
 import { SalesModel } from '../models/sale.model';
 import { SalesDetailModel } from '../models/sales_detail.model';
@@ -110,8 +110,40 @@ export class SalesController {
     try {
       const token = req.headers.authorization;
       const user = decodeToken(token as string);
-      const sales = await SalesModel.findAll();
+      const sales = await SalesModel.getAllSales();
+
       res.json(sales);
+    } catch (err) {
+      next(err);
+    }
+  }
+  static async getCapturedPhotoByUrl(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id_sale } = req.params;
+
+      const saleId = Number(id_sale);
+      if (!saleId) {
+        res.status(400).json({ error: 'id_sale inválido' });
+        return;
+      }
+
+      const sale = await SalesModel.findByPk(saleId);
+
+      if (!sale || !sale.url_img) {
+        res.status(404).json({ error: 'Registro de venta no encontrado' });
+        return;
+      }
+
+      const key = extractKeyFromUrl('user_payments', sale.url_img);
+
+      if (!key) {
+        res.status(500).json({ error: 'No se pudo obtener la clave del archivo' });
+        return;
+      }
+
+      const signedUrl = await getSignedFileUrl(key, 600); // 10 minutos
+
+      res.json({ url: signedUrl });
     } catch (err) {
       next(err);
     }

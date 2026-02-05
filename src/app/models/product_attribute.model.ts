@@ -1,7 +1,6 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
-import { PayMethodDigitalWallet, PayMethodMobilePay, PayMethodsTypes, PayMethodTransfer } from '../interfaces/pay_method';
-import { ProductAttributes, ProductTemplateKeys } from '../interfaces/product_attibute';
 import { sequelize } from '../config/db';
+import { ProductAttributes, ProductTemplateKeys } from '../interfaces/product_attibute';
 
 export class ProductAttributeModel extends Model<
   InferAttributes<ProductAttributeModel>,

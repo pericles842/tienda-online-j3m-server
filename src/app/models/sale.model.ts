@@ -1,5 +1,6 @@
-import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from 'sequelize';
+import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model, QueryTypes } from 'sequelize';
 import { sequelize } from '../config/db';
+import { Query } from 'mysql2/typings/mysql/lib/protocol/sequences/Query';
 
 export class SalesModel extends Model<InferAttributes<SalesModel>, InferCreationAttributes<SalesModel>> {
   declare id: CreationOptional<number>;
@@ -15,6 +16,27 @@ export class SalesModel extends Model<InferAttributes<SalesModel>, InferCreation
   declare rejected_user_id: number | null;
   declare updated_at: CreationOptional<Date>;
   declare created_at: CreationOptional<Date>;
+
+
+  static async getAllSales() {
+    let query = ` SELECT 
+      id, 
+      id_user, 
+      total_usd, 
+      total_bs, 
+      rate_day, 
+      reference, 
+      pay_method_id, 
+      status, 
+      approved_user_id, 
+      rejected_user_id, 
+      created_at, 
+      updated_at, 
+      'https://grupo-j3m.s3.us-east-2.amazonaws.com/public/pago-movil.webp' as url_img from sales `
+
+    return sequelize.query<SalesModel>(query, { type: QueryTypes.SELECT, });
+  }
+
 }
 
 SalesModel.init(

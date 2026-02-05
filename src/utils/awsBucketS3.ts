@@ -61,13 +61,13 @@ export const uploadToS3 = async (
 /* ---------------------------------------------------------
    OBTENER URL FIRMADA PARA ARCHIVOS PRIVADOS
 ----------------------------------------------------------*/
-export const getSignedFileUrl = async (key: string) => {
+export const getSignedFileUrl = async (key: string, expiresInSeconds = 3600) => {
   const command = new GetObjectCommand({
     Bucket: BUCKET,
     Key: key
   });
 
-  const signedUrl = await getSignedUrl(s3, command, { expiresIn: 3600 }); // 1 hora
+  const signedUrl = await getSignedUrl(s3, command, { expiresIn: expiresInSeconds });
   return signedUrl;
 };
 
