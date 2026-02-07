@@ -13,7 +13,7 @@ export class StatesController {
 
   static async getMunicipalities(req: Request, res: Response, next: NextFunction) {
     try {
-      const roles = await States.getMunicipalities(parseInt(req.params.id_state));
+      const roles = await States.getMunicipalities(parseInt(req.params.id_state as string, 10));
       res.json(roles);
     } catch (err) {
       next(err);
@@ -22,7 +22,7 @@ export class StatesController {
 
   static async getParishes(req: Request, res: Response, next: NextFunction) {
     try {
-      const roles = await States.getParishes(parseInt(req.params.id_city));
+      const roles = await States.getParishes(parseInt(req.params.id_city as string, 10));
       res.json(roles);
     } catch (err) {
       next(err);
