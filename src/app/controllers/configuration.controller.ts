@@ -29,4 +29,12 @@ export class ConfigurationController {
       next(err);
     }
   }
+  static async updateDollarRatesJ3m(req: Request, res: Response, next: NextFunction) {
+    try {
+      const response = await DollarRatesModel.updateDollarRatesJ3m();
+      res.json(response);
+    } catch (err) {
+      next(err);
+    }
+  }
 }

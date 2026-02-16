@@ -27,6 +27,7 @@ router.get('/configuration', authMiddleware, ConfigurationController.getConfigur
 router.put('/configuration', authMiddleware, ConfigurationController.updateConfiguration);
 router.get('/configuration-public', ConfigurationController.getConfiguration);
 router.get('/rate-dollar-j3m', ConfigurationController.getRatesDollar);
+router.get('/update-rates-j3m', ConfigurationController.updateDollarRatesJ3m);
 
 //*Usuarios
 router.get('/users', authMiddleware, UserController.getUsers);
@@ -81,9 +82,9 @@ router.post('/products-on-offer', authMiddleware, ProductOnOfferController.creat
 router.delete('/products-on-offer', authMiddleware, ProductOnOfferController.deleteProductOnOffer);
 
 //*VENTAS DE USUARIOS
-router.post('/payment', upload.single('image'), SalesController.createPayForUser);
-router.get('/sales', SalesController.getAllSales);
-router.get('/sales/photo/:id_sale', SalesController.getCapturedPhotoByUrl);
+router.post('/payment', upload.single('image'), authMiddleware, SalesController.createPayForUser);
+router.get('/sales', authMiddleware, SalesController.getAllSales);
+router.get('/sales/photo/:id_sale', authMiddleware, SalesController.getCapturedPhotoByUrl);
 
 //*MÉTODOS DE PAGO
 router.get('/public-pay-methods', PayMethodController.getPayMethods);
